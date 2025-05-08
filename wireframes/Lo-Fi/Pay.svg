@@ -1,0 +1,22 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="3200" viewBox="0 0 1440 3200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <rect x="40" y="120" width="1360" height="100" fill="#e0e0e0"/>
+  
+  <!-- Balance Card -->
+  <rect x="40" y="240" width="1360" height="160" rx="10" fill="#d0d0d0"/>
+  
+  <!-- Tabs -->
+  <rect x="40" y="420" width="320" height="60" rx="30" fill="#c0c0c0"/>
+  <rect x="380" y="420" width="320" height="60" rx="30" fill="#e0e0e0"/>
+  <rect x="720" y="420" width="320" height="60" rx="30" fill="#e0e0e0"/>
+  <rect x="1060" y="420" width="320" height="60" rx="30" fill="#e0e0e0"/>
+  
+  <!-- QR Scanner Area -->
+  <rect x="40" y="500" width="1360" height="600" rx="10" fill="#e0e0e0"/>
+  <circle cx="720" cy="800" r="200" fill="#d0d0d0"/>
+  
+  <!-- Action Button -->
+  <rect x="240" y="1120" width="960" height="80" rx="40" fill="#c0c0c0"/>
+</svg>

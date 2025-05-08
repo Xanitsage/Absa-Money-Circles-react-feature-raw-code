@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Absa Money Circles - Sitemap</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sitemap-container">
+    <h1>Absa Money Circles App Sitemap</h1>
+    
+    <div class="sitemap">
+      <div class="node root">
+        <div class="content">
+          <img src="../client/src/assets/absa_logo.png" alt="Absa Logo" class="logo">
+          <span>Absa App Home</span>
+        </div>
+        <div class="children">
+          <div class="node">
+            <div class="content" data-route="/">Home Dashboard</div>
+            <div class="children">
+              <div class="node" data-route="/circles">
+                <div class="content">Money Circles</div>
+                <div class="children">
+                  <div class="node" data-route="/create">
+                    <div class="content">Create Circle</div>
+                  </div>
+                  <div class="node" data-route="/circle/:id">
+                    <div class="content">Circle Details</div>
+                    <div class="features">
+                      <span>Overview</span>
+                      <span>Members</span>
+                      <span>Chat</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="node" data-route="/pay">
+                <div class="content">Payments</div>
+                <div class="features">
+                  <span>Scan QR</span>
+                  <span>Pay Phone</span>
+                  <span>Request</span>
+                  <span>Merchant</span>
+                </div>
+              </div>
+              <div class="node" data-route="/profile">
+                <div class="content">Profile</div>
+                <div class="features">
+                  <span>Settings</span>
+                  <span>Cards</span>
+                  <span>Badges</span>
+                </div>
+              </div>
+              <div class="node" data-route="/notifications">
+                <div class="content">Notifications</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

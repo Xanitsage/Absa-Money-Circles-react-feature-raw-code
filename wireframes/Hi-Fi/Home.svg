@@ -1,0 +1,42 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="3200" viewBox="0 0 1440 3200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Status Bar -->
+  <rect x="0" y="0" width="1440" height="100" fill="#ffffff"/>
+  <text x="60" y="60" font-family="Arial" font-size="32" fill="#000000">9:41</text>
+  
+  <!-- Header -->
+  <rect x="40" y="120" width="1360" height="200" fill="#ffffff"/>
+  <text x="60" y="170" font-family="Arial" font-size="48" font-weight="bold" fill="#000000">Welcome Back</text>
+  <text x="60" y="220" font-family="Arial" font-size="32" fill="#666666">Lindokuhle Msiza</text>
+  
+  <!-- Wallet Card -->
+  <rect x="40" y="340" width="1360" height="240" rx="20" fill="#DC0037"/>
+  <text x="60" y="390" font-family="Arial" font-size="32" fill="#ffffff" opacity="0.8">Available Balance</text>
+  <text x="60" y="450" font-family="Arial" font-size="64" font-weight="bold" fill="#ffffff">R 35,000.00</text>
+  
+  <!-- Quick Actions -->
+  <g transform="translate(40, 600)">
+    <rect width="320" height="150" rx="10" fill="#f5f5f5"/>
+    <text x="160" y="100" font-family="Arial" font-size="28" text-anchor="middle" fill="#000000">Send</text>
+  </g>
+  
+  <g transform="translate(380, 600)">
+    <rect width="320" height="150" rx="10" fill="#f5f5f5"/>
+    <text x="160" y="100" font-family="Arial" font-size="28" text-anchor="middle" fill="#000000">Request</text>
+  </g>
+  
+  <g transform="translate(720, 600)">
+    <rect width="320" height="150" rx="10" fill="#f5f5f5"/>
+    <text x="160" y="100" font-family="Arial" font-size="28" text-anchor="middle" fill="#000000">QR Pay</text>
+  </g>
+  
+  <g transform="translate(1060, 600)">
+    <rect width="320" height="150" rx="10" fill="#f5f5f5"/>
+    <text x="160" y="100" font-family="Arial" font-size="28" text-anchor="middle" fill="#000000">More</text>
+  </g>
+  
+  <!-- Bottom Navigation -->
+  <rect x="0" y="3100" width="1440" height="100" fill="#ffffff"/>
+  <rect x="660" y="3120" width="120" height="60" rx="30" fill="#DC0037"/>
+</svg>

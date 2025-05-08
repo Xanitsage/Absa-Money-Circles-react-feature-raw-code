@@ -1,0 +1,100 @@
+Absa MoneyCircles — Save Together, Win Together
+MoneyCircles helps you save money easily with friends, family, or your community — inside the Absa app.
+Create a group, set a goal, track your savings, chat, celebrate wins — all in one place!
+Saving money is now simple, fun, and social.
+________________________________________
+🗺️ 1. Information Architecture (IA Map)
+🔹 Home
+•	My Wallet (balance & quick actions)
+•	My Missions (rewards tracker)
+•	Shortcuts (Pay, Save, Group Chat)
+🔹 Savings Goals
+•	Start a New Goal
+•	Check Your Progress
+•	Unlock Surprise Rewards 🎁
+🔹 PayShap (Easy Payments)
+•	Scan QR to Pay
+•	Pay by Phone Number
+•	Request Money from Friends
+🔹 MoneyCircles (Group Saving)
+•	Make a New Circle
+•	Join a Circle with a Code
+•	See Circle Progress
+•	Celebrate Achievements 🥳
+🔹 Personalize Your App
+•	Change Themes, Colors, Emojis
+•	Set Notifications the Way You Like
+🔹 Learning Hub
+•	Daily Tips & Fun Quests
+•	Earn XP Points 🎯
+•	Ask “Absa Abby” for Money Advice
+🔹 Help Center
+•	Search FAQs
+•	Live Chat Support
+•	Request a Call-Back
+________________________________________
+✏️ 2. Low-Fidelity Wireframes (Simple Experience Flow)
+🔹 Home / Dashboard
+•	Big Wallet Balance on top
+•	Missions Progress Bar (like a game)
+•	[Send] [Pay QR] [Request] Buttons
+•	Shortcuts: [My Goals] [My Circles]
+🔹 MoneyCircles Main Screen
+•	Giant “+ Create New Circle” Button
+•	Quick Join with Invite Code
+•	List of Groups:
+o	Circle Name
+o	How much saved / Goal
+o	Next Celebration Date
+o	Last Group Chat Message
+🔹 Create New Circle
+•	Name Your Group
+•	Set a Target Amount
+•	Pick a Deadline
+•	Invite Friends (WhatsApp, SMS, Email)
+•	Circle Settings (Auto-Save ON/OFF, Notifications)
+🔹 Group Wallet
+•	Total Saved 💰
+•	List of Who Saved What
+•	Milestone Progress Bar
+•	Group Chat Tab
+•	Rewards Gallery (Badges, Stars, Crowns)
+🔹 Savings Goal Detail
+•	Goal Name & % Completed
+•	Mini Target (e.g., "Almost at R5,000!")
+•	Boost Button (Save Extra Instantly)
+🔹 Learning Hub
+•	Scrollable Cards with Quick Tips
+•	Complete Mini-Quests for XP Points
+•	Special Unlocks for Saving Streaks
+🔹 Help Center
+•	FAQs (Expandable)
+•	Live Chat
+•	Emergency Help (Request Callback)
+________________________________________
+🎨 3. Visual Design Plan (Real Dopamine Banking + Absa Branding)
+🔹 Colors
+•	Main Color: Absa Red (#E30613) ❤️
+•	Background: Clean White (#FFFFFF)
+•	Celebrations & Rewards: Gold (#FFD700) ✨
+🔹 Typography
+•	Smooth Modern Sans-Serif (Easy to Read)
+•	Big Numbers, Friendly Text (not formal banking talk)
+🔹 UI Style
+•	Soft Rounded Buttons
+•	Big Fun Cards (Not boring lists)
+•	Light Confetti Animation when you hit milestones 🎉
+🔹 Icons
+•	Super Clear and Fun: Piggy Banks 🐖, Wallets, Party Hats 🎊, Badges 🛡️
+🔹 Emojis
+•	Tastefully added where it makes users feel happy (like group chats and rewards)
+________________________________________
+🌈 Improvements from your version:
+Old	New
+Very good	Now story-like, playful, and built for dopamine triggers
+Structured	Now flows like an app experience, easy step-by-step thinking
+Formal	Now conversational (but still professional)
+Traditional fintech	Now modern — it feels like TikTok, Snapchat + Banking combined
+Separate technical and emotional layers	Now integrated emotion into product structure (Dopamine Design!)
+________________________________________
+

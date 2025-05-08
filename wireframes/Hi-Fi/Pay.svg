@@ -1,0 +1,26 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="3200" viewBox="0 0 1440 3200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <text x="60" y="180" font-family="Arial" font-size="48" font-weight="bold">Pay</text>
+  
+  <!-- Balance Card -->
+  <rect x="40" y="240" width="1360" height="160" rx="10" fill="#DC0037"/>
+  <text x="60" y="280" font-family="Arial" font-size="28" fill="#ffffff" opacity="0.8">Available Balance</text>
+  <text x="60" y="340" font-family="Arial" font-size="48" font-weight="bold" fill="#ffffff">R 35,000.00</text>
+  
+  <!-- Tabs -->
+  <rect x="40" y="420" width="320" height="60" rx="30" fill="#DC0037"/>
+  <text x="200" y="460" font-family="Arial" font-size="24" text-anchor="middle" fill="#ffffff">Scan QR</text>
+  
+  <rect x="380" y="420" width="320" height="60" rx="30" fill="#f5f5f5"/>
+  <text x="540" y="460" font-family="Arial" font-size="24" text-anchor="middle">Pay Phone</text>
+  
+  <!-- QR Scanner Area -->
+  <rect x="40" y="500" width="1360" height="600" rx="10" fill="#f5f5f5"/>
+  <circle cx="720" cy="800" r="200" fill="#ffffff" stroke="#DC0037" stroke-width="4"/>
+  
+  <!-- Action Button -->
+  <rect x="240" y="1120" width="960" height="80" rx="40" fill="#DC0037"/>
+  <text x="720" y="1170" font-family="Arial" font-size="28" text-anchor="middle" fill="#ffffff">Generate Payment QR</text>
+</svg>

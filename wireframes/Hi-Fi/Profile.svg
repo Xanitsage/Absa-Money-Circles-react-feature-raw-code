@@ -1,0 +1,27 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="3200" viewBox="0 0 1440 3200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Profile Header -->
+  <circle cx="140" cy="180" r="80" fill="#DC0037"/>
+  <text x="140" y="200" font-family="Arial" font-size="48" text-anchor="middle" fill="#ffffff">LM</text>
+  
+  <text x="240" y="160" font-family="Arial" font-size="40" font-weight="bold">Lindokuhle Msiza</text>
+  <text x="240" y="210" font-family="Arial" font-size="28" fill="#666666">lindokuhle.msiza@gmail.com</text>
+  
+  <!-- Badges Section -->
+  <text x="60" y="320" font-family="Arial" font-size="32" font-weight="bold">Your Badges</text>
+  
+  <g transform="translate(140, 400)">
+    <circle r="40" fill="#DC0037"/>
+    <text y="60" font-family="Arial" font-size="20" text-anchor="middle">Early Saver</text>
+  </g>
+  
+  <!-- Settings Card -->
+  <rect x="40" y="520" width="1360" height="600" rx="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="60" y="580" font-family="Arial" font-size="32" font-weight="bold">Settings</text>
+  
+  <g transform="translate(60, 620)">
+    <text font-family="Arial" font-size="28">Notifications</text>
+    <rect x="1200" y="0" width="80" height="40" rx="20" fill="#DC0037"/>
+  </g>
+</svg>

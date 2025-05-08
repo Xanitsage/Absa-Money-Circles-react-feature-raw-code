@@ -1,0 +1,193 @@
+PS C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env> 
+>> #!/bin/bash
+>> 
+>> # Make script executable
+>> chmod +x setup.sh
+>> 
+>> # Install npm dependencies
+>> echo "Installing npm dependencies..."
+>> npm install
+>> 
+>> # Build the project
+>> echo "Building the project..."
+>> npm run build
+>> 
+>> # Copy configuration files
+>> echo "Copying configuration files..."
+>> cp -r client/src/components/* ./components/
+>> cp client/src/hooks/* ./hooks/
+>> cp client/src/lib/* ./lib/
+>> cp client/src/pages/* ./pages/
+>>
+>> # Set up environment variables
+>> echo "Setting up environment variables..."
+>> touch .env
+>> echo "NODE_ENV=development" >> .env
+>> echo "PORT=5000" >> .env
+>>
+>> # Set correct permissions
+>> echo "Setting permissions..."
+>> chmod -R 755 ./components
+>> chmod -R 755 ./hooks
+>> chmod -R 755 ./lib
+>> chmod -R 755 ./pages
+>>
+>> echo "Setup complete! You can now run the development server with 'npm run dev'"
+>>
+chmod: 
+Line |
+   5 |  chmod +x setup.sh
+     |  ~~~~~
+     | The term 'chmod' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+Installing npm dependencies...
+npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+
+added 550 packages, and audited 551 packages in 1m
+
+75 packages are looking for funding
+  run `npm fund` for details
+
+6 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Building the project...
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v5.4.14 building for production...
+transforming (3) src\main.tsxBrowserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3017 modules transformed.
+../dist/public/index.html                            0.64 kB │ gzip:   0.39 kB
+../dist/public/assets/absa_abby_logo-CEfBZYnA.png   73.79 kB
+../dist/public/assets/absa_logo-Pc7Cd5aV.png       183.20 kB
+../dist/public/assets/index-BaJ-OWV4.css            69.17 kB │ gzip:  12.06 kB
+../dist/public/assets/index-DKid-3qF.js            689.96 kB │ gzip: 208.32 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 9.84s
+
+  dist\index.js  35.2kb
+
+Done in 12ms
+Copying configuration files...
+Copy-Item: 
+Line |
+  18 |  cp client/src/hooks/* ./hooks/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\hooks\'.
+Copy-Item: 
+Line |
+  18 |  cp client/src/hooks/* ./hooks/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\hooks\'.
+Copy-Item: 
+Line |
+  19 |  cp client/src/lib/* ./lib/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\lib\'.
+Copy-Item: 
+Line |
+  19 |  cp client/src/lib/* ./lib/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\lib\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Copy-Item: 
+Line |
+  20 |  cp client/src/pages/* ./pages/
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The directory name is invalid. : 'C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env\pages\'.
+Setting up environment variables...
+touch: 
+Line |
+  24 |  touch .env
+     |  ~~~~~
+     | The term 'touch' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+Setting permissions...
+chmod: 
+Line |
+  30 |  chmod -R 755 ./components
+     |  ~~~~~
+     | The term 'chmod' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+chmod: 
+Line |
+  31 |  chmod -R 755 ./hooks
+     |  ~~~~~
+     | The term 'chmod' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+chmod: 
+Line |
+  32 |  chmod -R 755 ./lib
+     |  ~~~~~
+     | The term 'chmod' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+chmod: 
+Line |
+  33 |  chmod -R 755 ./pages
+     |  ~~~~~
+     | The term 'chmod' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+Setup complete! You can now run the development server with 'npm run dev'
+PS C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env> npm run dev
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+'NODE_ENV' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\DELL\Documents\2025 TUT School Projects\Absa Hackathon\RAW CODE\AMC final\Absa-Money-Circles-react-feature-final-env\Absa-Money-Circles-react-feature-final-env> Args = "Start application"

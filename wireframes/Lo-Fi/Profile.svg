@@ -1,0 +1,20 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="3200" viewBox="0 0 1440 3200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Profile Header -->
+  <circle cx="140" cy="180" r="80" fill="#e0e0e0"/>
+  <rect x="240" y="140" width="400" height="40" fill="#d0d0d0"/>
+  <rect x="240" y="190" width="300" height="30" fill="#d0d0d0"/>
+  
+  <!-- Badges Section -->
+  <rect x="40" y="300" width="1360" height="200" fill="#e0e0e0"/>
+  <circle cx="140" cy="400" r="40" fill="#d0d0d0"/>
+  <circle cx="240" cy="400" r="40" fill="#d0d0d0"/>
+  <circle cx="340" cy="400" r="40" fill="#d0d0d0"/>
+  
+  <!-- Settings Card -->
+  <rect x="40" y="520" width="1360" height="600" rx="10" fill="#e0e0e0"/>
+  <rect x="60" y="560" width="1320" height="80" fill="#d0d0d0"/>
+  <rect x="60" y="660" width="1320" height="80" fill="#d0d0d0"/>
+  <rect x="60" y="760" width="1320" height="80" fill="#d0d0d0"/>
+</svg>

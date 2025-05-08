@@ -1,0 +1,218 @@
+/* Card icon positioning */
+.has-icon .card-icon {
+  @apply absolute left-3 top-1/2 -translate-y-1/2;
+  @apply bg-secondary rounded-full p-3;
+}
+
+.has-icon .card-icon svg {
+  @apply text-primary w-5 h-5;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  width: 100%;
+  max-width: min(1440px, 100% - 2rem);
+  min-height: 100vh;
+  margin: 0 auto;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Responsive typography */
+html {
+  font-size: clamp(14px, 1vw + 12px, 16px);
+}
+
+/* Responsive spacing */
+.container {
+  width: 100%;
+  padding-right: clamp(1rem, 3vw, 2rem);
+  padding-left: clamp(1rem, 3vw, 2rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background-color: hsl(var(--background));
+}
+
+/* Adjust spacing for mobile layout */
+.px-4 {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+.py-3 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.mb-6 {
+  margin-bottom: 1rem !important;
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.75rem !important;
+}
+
+.p-4 {
+  padding: 0.75rem !important;
+}
+
+.gap-4 {
+  gap: 0.75rem !important;
+}
+
+.text-3xl {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+}
+
+.h-12 {
+  height: 2.5rem !important;
+}
+
+.w-12 {
+  width: 2.5rem !important;
+}
+
+.bottom-20 {
+  bottom: 4.5rem !important;
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
+  --muted: 350 30% 95%;
+  --muted-foreground: 350 10% 40%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --border: 350 20% 90%;
+  --input: 350 20% 90%;
+  --primary: 350 100% 43%; /* Absa Red #DC0037 */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 350 30% 96%;
+  --secondary-foreground: 350 100% 43%;
+  --accent: 44 100% 50%; /* Absa Gold #FFA400 */
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 100% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 350 100% 43%;
+  --radius: 0.5rem;
+  --chart-1: 350 100% 43%;
+  --chart-2: 44 100% 50%;
+  --chart-3: 350 80% 60%;
+  --chart-4: 44 80% 60%;
+  --chart-5: 350 60% 70%;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 350 100% 43%; /* Absa Red #DC0037 */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 51 100% 50%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 350 100% 43%;
+  --chart-1: 350 100% 43%;
+  --chart-2: 51 100% 50%;
+  --chart-3: 120 60% 50%;
+  --chart-4: 30 100% 50%;
+  --chart-5: 240 100% 50%;
+}
+
+.bottom-nav {
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid hsl(var(--border));
+  background: white;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: hsl(var(--accent));
+  opacity: 0;
+  transform: translateY(0);
+  animation: confetti-fall 2s ease forwards;
+  z-index: 100;
+  border-radius: 50%;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(300px) rotate(360deg);
+  }
+}
+
+.badge-container {
+  position: relative;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.badge-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0 1rem;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.badge-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.badge-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.badge-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
