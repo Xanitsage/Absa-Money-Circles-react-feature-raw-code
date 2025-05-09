@@ -12,10 +12,39 @@ interface Message {
   text: string;
   sender: "user" | "assistant";
   timestamp: Date;
+  type?: "text" | "achievement" | "tip" | "reward";
+  metadata?: {
+    points?: number;
+    achievement?: string;
+    progress?: number;
+    rewardType?: string;
+  };
 }
 
-// This would be replaced with actual AI-powered responses
+// Enhanced AI responses with personalization and gamification
 const mockResponses: Record<string, string> = {
+  // Onboarding responses
+  "new": "Welcome to Absa MoneyCircles! 🎉 I'm Abby, your personal financial guide. I can help you save smarter, manage your money circles, and achieve your financial goals. What would you like to explore first?",
+  "guide": "Let me show you around! With MoneyCircles, you can save with friends, track goals, earn rewards, and learn money tips. Want to start a circle or set a savings goal?",
+  
+  // Financial literacy responses
+  "learn": "I love sharing financial knowledge! 📚 We have daily tips, fun quests, and interactive lessons. You can earn XP points while learning. What topic interests you?",
+  "tips": "Here's a smart saving tip: Set up automatic contributions to your MoneyCircle. Even small, regular amounts add up over time! Want to try it?",
+  "budget": "Creating a budget is your first step to financial success! Let's break down your income and expenses together. Ready to start?",
+  
+  // MoneyCircles specific responses
+  "circle progress": "Your Family Vacation Fund circle is doing great! 🌟 The group has saved R15,000 (75% of goal). You've contributed R3,000 so far. Keep it up!",
+  "circle achievement": "🎉 Congratulations! Your Office Party circle just reached its first milestone! You've unlocked a special badge and 100 XP points!",
+  "circle tip": "Pro tip: Invite more friends to your circle! Larger groups often reach their goals faster and make saving more fun. Want to send some invites?",
+  
+  // Gamification and rewards
+  "points": "You've earned 350 XP points this month! 🏆 Complete 2 more savings missions to level up and unlock exclusive rewards!",
+  "rewards": "You have 3,250 Absa Rewards points and 3 unclaimed badges! Would you like to see what you can redeem them for?",
+  "mission": "New mission alert! 🎯 Save R500 this week to earn double XP points and a special achievement badge. Ready to accept?",
+  
+  // Personalized financial insights
+  "analysis": "I notice you're great at regular saving! 📈 Based on your pattern, you could reach your holiday goal 2 months earlier by increasing your weekly contribution by just R50!",
+  "suggestion": "Hey, I see you have some extra funds in your account. Would you like me to automatically distribute it across your savings goals?",
   "hello": "Hello! I'm Abby, your Absa virtual assistant. How can I help you today?",
   "hi": "Hi there! I'm Abby, your Absa virtual assistant. How can I help you today?",
   "help": "I can help you with account information, money circles, savings goals, payments, and more. What would you like to know?",
@@ -42,7 +71,7 @@ const mockResponses: Record<string, string> = {
   "bye": "Goodbye! Have a great day. Feel free to chat with me anytime you need assistance.",
 };
 
-// Default suggestions for common actions
+// Enhanced contextual suggestions
 const defaultSuggestions = [
   "What's my balance?",
   "Show my savings goals",
@@ -89,7 +118,8 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
       id: Date.now().toString(),
       text: input,
       sender: "user",
-      timestamp: new Date()
+      timestamp: new Date(),
+      type: "text"
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -97,14 +127,25 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
 
     // Process the message and generate a response
     setTimeout(() => {
-      const response = generateResponse(input);
+      const { response, type, metadata } = generateEnhancedResponse(input);
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: response,
         sender: "assistant",
-        timestamp: new Date()
+        timestamp: new Date(),
+        type,
+        metadata
       };
       setMessages(prev => [...prev, assistantMessage]);
+
+      // Show toast for achievements and rewards
+      if (type === "achievement" || type === "reward") {
+        toast({
+          title: type === "achievement" ? "Achievement Unlocked! 🏆" : "Reward Earned! 🎁",
+          description: metadata?.achievement || metadata?.rewardType,
+          duration: 5000
+        });
+      }
 
       // Update suggestions based on context
       updateSuggestions(input);
@@ -117,30 +158,67 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
     }
   };
 
-  // Mock response generation
-  const generateResponse = (userInput: string): string => {
+  // Enhanced response generation with types and metadata
+  const generateEnhancedResponse = (userInput: string): { response: string; type: Message['type']; metadata?: Message['metadata'] } => {
     const lowerInput = userInput.toLowerCase();
     
+    // Check for achievements and rewards
+    if (lowerInput.includes("achievement") || lowerInput.includes("badge")) {
+      return {
+        response: mockResponses["circle achievement"],
+        type: "achievement",
+        metadata: {
+          points: 100,
+          achievement: "Savings Milestone Master"
+        }
+      };
+    }
+
+    if (lowerInput.includes("reward") || lowerInput.includes("points")) {
+      return {
+        response: mockResponses["rewards"],
+        type: "reward",
+        metadata: {
+          points: 3250,
+          rewardType: "Cashback Reward"
+        }
+      };
+    }
+
+    // Check for tips and financial advice
+    if (lowerInput.includes("tip") || lowerInput.includes("advice")) {
+      return {
+        response: mockResponses["tips"],
+        type: "tip"
+      };
+    }
+
     // Check for balance or account inquiries
     if (lowerInput.includes("balance") || lowerInput.includes("money") || lowerInput.includes("account")) {
       if (wallet) {
-        return `Your current account balance is ${formatCurrency(wallet.balance)}.`;
+        return {
+          response: `Your current account balance is ${formatCurrency(wallet.balance)}.`,
+          type: "text"
+        };
       }
     }
 
     // Check for direct matches in our mock responses
     for (const key in mockResponses) {
       if (lowerInput.includes(key)) {
-        return mockResponses[key];
+        return {
+          response: mockResponses[key],
+          type: "text"
+        };
       }
     }
 
     // Default responses if no match is found
     const defaultResponses = [
-      "I'm not sure I understand. Could you rephrase that?",
-      "I'm still learning. Can you ask me in a different way?",
-      "I don't have that information right now. Is there something else I can help with?",
-      "That's beyond my current capabilities. I can help with account info, transfers, and savings goals though!"
+      "I want to make sure I help you in the best way possible. Could you rephrase that? 🤔",
+      "I'm continuously learning to serve you better! Can you tell me more about what you need? 📚",
+      "Let me suggest something else that might help. Would you like to explore savings goals or money circles? 💡",
+      "While I'm working on understanding that better, I can help you with account info, savings goals, or money circles! What interests you? 🎯"
     ];
 
     return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
@@ -267,10 +345,39 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
                 className={`max-w-[80%] px-4 py-2 rounded-2xl ${
                   message.sender === 'user' 
                     ? 'bg-primary text-white rounded-tr-none' 
+                    : message.type === 'achievement' 
+                    ? 'bg-green-50 border-2 border-green-200 rounded-tl-none'
+                    : message.type === 'reward'
+                    ? 'bg-yellow-50 border-2 border-yellow-200 rounded-tl-none'
+                    : message.type === 'tip'
+                    ? 'bg-blue-50 border-2 border-blue-200 rounded-tl-none'
                     : 'bg-white shadow-sm rounded-tl-none'
                 }`}
               >
+                {message.type === 'achievement' && (
+                  <div className="flex items-center mb-2">
+                    <span className="text-lg mr-2">🏆</span>
+                    <span className="text-sm font-semibold text-green-700">Achievement Unlocked!</span>
+                  </div>
+                )}
+                {message.type === 'reward' && (
+                  <div className="flex items-center mb-2">
+                    <span className="text-lg mr-2">🎁</span>
+                    <span className="text-sm font-semibold text-yellow-700">Reward Earned!</span>
+                  </div>
+                )}
+                {message.type === 'tip' && (
+                  <div className="flex items-center mb-2">
+                    <span className="text-lg mr-2">💡</span>
+                    <span className="text-sm font-semibold text-blue-700">Pro Tip</span>
+                  </div>
+                )}
                 <p>{message.text}</p>
+                {message.metadata?.points && (
+                  <div className="mt-2 text-sm">
+                    <span className="font-semibold">+{message.metadata.points} XP</span>
+                  </div>
+                )}
                 <p className="text-xs opacity-70 mt-1 text-right">
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
