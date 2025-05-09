@@ -11,8 +11,8 @@ const groqApiKey = process.env.GROQ_API_KEY;
 
 async function getAIResponse(prompt: string, context: any) {
   try {
-    const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
-      model: 'mixtral-8x7b-32768',
+    const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
+      model: 'anthropic/claude-3-opus',
       messages: [
         {
           role: 'system',
