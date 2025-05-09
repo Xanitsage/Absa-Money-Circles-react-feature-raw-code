@@ -11,24 +11,24 @@ const groqApiKey = process.env.GROQ_API_KEY;
 
 async function getAIResponse(prompt: string, context: any) {
   try {
-    const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
-      model: 'mistral-large',
+    const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
+      model: 'mixtral-8x7b-32768',
       messages: [
         {
           role: 'system',
-          content: `You are Abby, an AI assistant for Absa MoneyCircles. You help users manage their savings groups, 
-          provide financial advice, and guide them through their financial journey. You have access to their financial data 
-          and group savings information. Be professional yet friendly, and always prioritize the user's financial wellbeing.`
+          content: `You are Abby, an intelligent financial assistant for Absa MoneyCircles. You specialize in helping users manage their savings groups, providing personalized financial advice, and guiding them through their financial journey. You have access to their financial data and group savings information. Be professional, friendly, and empathetic while prioritizing the user's financial wellbeing. Always provide specific, actionable advice based on the user's context.`
         },
         {
           role: 'user',
           content: prompt
         }
       ],
+      temperature: 0.7,
+      max_tokens: 2048,
       context
     }, {
       headers: {
-        'Authorization': `Bearer ${openRouterApiKey}`,
+        'Authorization': `Bearer ${groqApiKey}`,
         'Content-Type': 'application/json'
       }
     });
