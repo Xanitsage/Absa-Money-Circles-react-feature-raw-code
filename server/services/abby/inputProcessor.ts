@@ -41,7 +41,7 @@ export async function processUserInput(text: string, userId: string): Promise<Pr
 
     // Basic intent classification
     const intent = classifyIntent(text.toLowerCase());
-    
+
     // Entity extraction
     const entities = extractEntities(text);
 

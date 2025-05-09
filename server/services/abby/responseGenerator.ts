@@ -278,3 +278,9 @@ function getDefaultSuggestions(): string[] {
     'Learn about investing'
   ];
 }
+import { generateResponse } from '../services/abby/responseGenerator';
+
+const apiKey = process.env.API_KEY;
+if (!apiKey) {
+  throw new Error('API_KEY environment variable is not set');
+}
