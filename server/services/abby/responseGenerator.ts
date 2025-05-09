@@ -4,6 +4,41 @@ import { eq } from 'drizzle-orm';
 import { users, achievements, moneyCircles } from '../../schema';
 import { logger } from '../../utils/logger';
 import { ProcessedInput } from './inputProcessor';
+import axios from 'axios';
+
+const openRouterApiKey = process.env.OPENROUTER_API_KEY;
+const groqApiKey = process.env.GROQ_API_KEY;
+
+async function getAIResponse(prompt: string, context: any) {
+  try {
+    const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
+      model: 'mistral-large',
+      messages: [
+        {
+          role: 'system',
+          content: `You are Abby, an AI assistant for Absa MoneyCircles. You help users manage their savings groups, 
+          provide financial advice, and guide them through their financial journey. You have access to their financial data 
+          and group savings information. Be professional yet friendly, and always prioritize the user's financial wellbeing.`
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      context
+    }, {
+      headers: {
+        'Authorization': `Bearer ${openRouterApiKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    return response.data.choices[0].message.content;
+  } catch (error) {
+    logger.error('AI API error:', error);
+    return null;
+  }
+}
 
 interface ResponseMetadata {
   type: 'text' | 'achievement' | 'tip' | 'reward';
@@ -69,6 +104,52 @@ export async function generateResponse(
   try {
     // Get comprehensive user context
     const user = await db.query.users.findFirst({
+      where: eq(users.id, userId),
+      with: {
+        achievements: true,
+        goals: true,
+        circles: {
+          with: {
+            members: true
+          }
+        }
+      }
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Prepare context for AI
+    const context = {
+      user: {
+        name: user.name,
+        savings: user.monthlySavings,
+        achievements: user.achievements,
+        circles: user.circles
+      },
+      intent: input.intent,
+      entities: input.entities
+    };
+
+    // Get AI-generated response
+    const aiResponse = await getAIResponse(input.text, context);
+    
+    if (aiResponse) {
+      const suggestions = generateContextualSuggestions(user, input);
+      const newAchievements = await checkForAchievements(user, input);
+
+      return {
+        text: aiResponse,
+        type: newAchievements.length > 0 ? 'achievement' : 'text',
+        metadata: {
+          type: newAchievements.length > 0 ? 'achievement' : 'text',
+          achievement: newAchievements[0]?.name,
+          points: newAchievements[0]?.points
+        },
+        suggestions
+      };
+    }
       where: eq(users.id, userId),
       with: {
         achievements: true,
