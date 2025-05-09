@@ -10,28 +10,70 @@ const openRouterApiKey = process.env.OPENROUTER_API_KEY;
 const groqApiKey = process.env.GROQ_API_KEY;
 
 async function getAIResponse(prompt: string, context: any) {
-  try {
-    const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
-      model: 'anthropic/claude-3-opus',
-      messages: [
-        {
-          role: 'system',
-          content: `You are Abby, an intelligent financial assistant for Absa MoneyCircles. You specialize in helping users manage their savings groups, providing personalized financial advice, and guiding them through their financial journey. You have access to their financial data and group savings information. Be professional, friendly, and empathetic while prioritizing the user's financial wellbeing. Always provide specific, actionable advice based on the user's context.`
-        },
-        {
-          role: 'user',
-          content: prompt
+  const systemPrompt = `You are Abby, an advanced AI financial assistant for Absa MoneyCircles. You have deep expertise in:
+- Personal finance and savings strategies
+- Group savings dynamics and management
+- South African banking and financial systems
+- Behavioral economics and financial psychology
+You have access to user financial data and group savings information. Always be professional yet approachable, and provide specific, actionable advice based on the context.`;
+
+  async function tryOpenRouter() {
+    try {
+      const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
+        model: 'anthropic/claude-3-opus',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 4096,
+        context
+      }, {
+        headers: {
+          'Authorization': `Bearer ${openRouterApiKey}`,
+          'HTTP-Referer': 'https://absa.repl.co',
+          'Content-Type': 'application/json'
         }
-      ],
-      temperature: 0.7,
-      max_tokens: 2048,
-      context
-    }, {
-      headers: {
-        'Authorization': `Bearer ${groqApiKey}`,
-        'Content-Type': 'application/json'
-      }
-    });
+      });
+      return response.data.choices[0].message.content;
+    } catch (error) {
+      logger.error('OpenRouter API error:', error);
+      return null;
+    }
+  }
+
+  async function tryGroq() {
+    try {
+      const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
+        model: 'mixtral-8x7b-32768',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 4096,
+        context
+      }, {
+        headers: {
+          'Authorization': `Bearer ${groqApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      return response.data.choices[0].message.content;
+    } catch (error) {
+      logger.error('Groq API error:', error);
+      return null;
+    }
+  }
+
+  // Try OpenRouter first, fallback to Groq
+  const openRouterResponse = await tryOpenRouter();
+  if (openRouterResponse) return openRouterResponse;
+
+  const groqResponse = await tryGroq();
+  if (groqResponse) return groqResponse;
+
+  return "I apologize, but I'm having trouble processing your request right now. Please try again in a moment.";
 
     return response.data.choices[0].message.content;
   } catch (error) {
