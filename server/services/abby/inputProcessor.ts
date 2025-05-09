@@ -98,22 +98,57 @@ export async function processUserInput(text: string, userId: string): Promise<Pr
   }
 }
 
-function classifyIntent(text: string): { intent: string; confidence: number } {
+function classifyIntent(text: string): { intent: string; confidence: number; subIntents: string[]; complexity: number } {
   let highestConfidence = 0;
   let matchedIntent = 'unknown';
+  const subIntents: string[] = [];
+  let complexity = 0;
 
+  // Analyze question complexity
+  complexity = analyzeComplexity(text);
+
+  // Multi-intent classification
   for (const [intent, patterns] of Object.entries(intentPatterns)) {
     for (const pattern of patterns) {
       const regex = new RegExp(pattern, 'i');
       if (regex.test(text)) {
         const confidence = calculateConfidenceScore(text, pattern);
-        if (confidence > highestConfidence) {
-          highestConfidence = confidence;
-          matchedIntent = intent;
+        if (confidence > 0.4) { // Track multiple relevant intents
+          subIntents.push(intent);
+          if (confidence > highestConfidence) {
+            highestConfidence = confidence;
+            matchedIntent = intent;
+          }
         }
       }
     }
   }
+
+  // Enhanced intent classification
+  return {
+    intent: matchedIntent,
+    confidence: highestConfidence,
+    subIntents: subIntents,
+    complexity: complexity
+  };
+}
+
+function analyzeComplexity(text: string): number {
+  const complexityFactors = {
+    questionWords: /(why|how|what if|explain|compare|analyze|predict)/gi,
+    financialTerms: /(interest rate|investment|portfolio|diversification|risk|market|trend)/gi,
+    conditionals: /(if|when|unless|assuming|provided that)/gi,
+    numericalAnalysis: /(percentage|ratio|growth|decline|calculate|estimate)/gi
+  };
+
+  let complexity = 0;
+  for (const [_, regex] of Object.entries(complexityFactors)) {
+    const matches = text.match(regex) || [];
+    complexity += matches.length * 0.25;
+  }
+
+  return Math.min(Math.max(complexity, 0), 1);
+}
 
   return {
     intent: matchedIntent,
