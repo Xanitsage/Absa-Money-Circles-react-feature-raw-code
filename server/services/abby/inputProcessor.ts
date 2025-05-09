@@ -1,3 +1,4 @@
+
 import { db } from '../../storage';
 import { eq } from 'drizzle-orm';
 import { users, conversations } from '../../schema';
@@ -15,19 +16,50 @@ interface ProcessedInput {
   confidence: number;
 }
 
-/**
- * Process and analyze user input to determine intent and extract relevant entities
- */
+const intentPatterns = {
+  savings_inquiry: [
+    'how much (did|have) I save(d)?',
+    'savings? (status|progress|update)',
+    'my savings?',
+    'saved (this|last) month'
+  ],
+  circle_status: [
+    'circle (status|progress|update)',
+    'how is (my|our) circle (doing|going)',
+    'circle progress',
+    'group savings'
+  ],
+  financial_education: [
+    'explain|tell me about|what is|how (do|does)',
+    'learn|teach|understand',
+    'difference between',
+    'why should I'
+  ],
+  balance_inquiry: [
+    'balance',
+    'how much (do I have|is in)',
+    'account (status|balance)',
+    'available funds'
+  ],
+  transfer: [
+    'send|transfer|pay',
+    'payment to',
+    'move money',
+    'contribute'
+  ],
+  goal_setting: [
+    'set|create|start (a )?(new )?goal',
+    'saving for',
+    'want to save',
+    'target amount'
+  ]
+};
+
 export async function processUserInput(text: string, userId: string): Promise<ProcessedInput> {
   try {
     // Get user context
     const user = await db.query.users.findFirst({
       where: eq(users.id, userId),
-      columns: {
-        level: true,
-        points: true,
-        preferences: true
-      },
       with: {
         achievements: {
           limit: 5,
@@ -39,10 +71,10 @@ export async function processUserInput(text: string, userId: string): Promise<Pr
       }
     });
 
-    // Basic intent classification
-    const intent = classifyIntent(text.toLowerCase());
+    // Classify intent
+    const { intent, confidence } = classifyIntent(text.toLowerCase());
 
-    // Entity extraction
+    // Extract entities
     const entities = extractEntities(text);
 
     // Build context
@@ -57,7 +89,7 @@ export async function processUserInput(text: string, userId: string): Promise<Pr
       intent,
       entities,
       context,
-      confidence: calculateConfidence(intent, entities)
+      confidence
     };
 
   } catch (error) {
@@ -66,32 +98,43 @@ export async function processUserInput(text: string, userId: string): Promise<Pr
   }
 }
 
-/**
- * Classify the user's intent based on message content
- */
-function classifyIntent(text: string): string {
-  const intents = {
-    balance: ['balance', 'money', 'account', 'how much'],
-    transfer: ['send', 'transfer', 'pay', 'payment'],
-    savings: ['save', 'saving', 'goal', 'target'],
-    circles: ['circle', 'group', 'join', 'create'],
-    help: ['help', 'how', 'what', 'guide'],
-    rewards: ['reward', 'point', 'badge', 'achievement'],
-    learn: ['learn', 'teach', 'explain', 'understand']
-  };
+function classifyIntent(text: string): { intent: string; confidence: number } {
+  let highestConfidence = 0;
+  let matchedIntent = 'unknown';
 
-  for (const [intent, keywords] of Object.entries(intents)) {
-    if (keywords.some(keyword => text.includes(keyword))) {
-      return intent;
+  for (const [intent, patterns] of Object.entries(intentPatterns)) {
+    for (const pattern of patterns) {
+      const regex = new RegExp(pattern, 'i');
+      if (regex.test(text)) {
+        const confidence = calculateConfidenceScore(text, pattern);
+        if (confidence > highestConfidence) {
+          highestConfidence = confidence;
+          matchedIntent = intent;
+        }
+      }
     }
   }
 
-  return 'general';
+  return {
+    intent: matchedIntent,
+    confidence: highestConfidence
+  };
 }
 
-/**
- * Extract relevant entities from the user's message
- */
+function calculateConfidenceScore(text: string, pattern: string): number {
+  const words = text.split(' ');
+  const patternWords = pattern.split('|')[0].split(' ');
+  
+  let matchCount = 0;
+  for (const word of words) {
+    if (patternWords.some(p => word.match(new RegExp(p, 'i')))) {
+      matchCount++;
+    }
+  }
+  
+  return Math.min(matchCount / words.length + 0.3, 1.0);
+}
+
 function extractEntities(text: string): Record<string, any> {
   const entities: Record<string, any> = {};
 
@@ -107,77 +150,56 @@ function extractEntities(text: string): Record<string, any> {
     entities.date = new Date(dateMatch[0]);
   }
 
-  // Contact/recipient detection
-  const contactMatch = text.match(/to\s+([\w\s]+)/i);
-  if (contactMatch) {
-    entities.recipient = contactMatch[1].trim();
+  // Financial concept detection
+  const concepts = ['saving', 'budget', 'interest', 'investment', 'debt'];
+  for (const concept of concepts) {
+    if (text.toLowerCase().includes(concept)) {
+      entities.concept = concept;
+      break;
+    }
+  }
+
+  // Circle/group detection
+  const circleMatch = text.match(/circle|group/i);
+  if (circleMatch) {
+    entities.circle = true;
   }
 
   return entities;
 }
 
-/**
- * Generate contextual suggested actions based on intent and user state
- */
 function generateSuggestedActions(intent: string, user: any): string[] {
   const suggestions: string[] = [];
 
   switch (intent) {
-    case 'balance':
+    case 'savings_inquiry':
       suggestions.push(
-        'View transaction history',
-        'Set up spending alerts',
-        'Create a savings goal'
+        'View savings breakdown',
+        'Set new savings goal',
+        'Join a money circle'
       );
       break;
-    case 'transfer':
+    case 'circle_status':
       suggestions.push(
-        'Schedule recurring payment',
-        'Add new beneficiary',
-        'View payment limits'
-      );
-      break;
-    case 'savings':
-      suggestions.push(
-        'Join a money circle',
-        'Set up auto-save',
-        'Track your progress'
-      );
-      break;
-    case 'circles':
-      suggestions.push(
-        'Create new circle',
-        'View circle benefits',
+        'View circle details',
+        'Make contribution',
         'Invite friends'
+      );
+      break;
+    case 'financial_education':
+      suggestions.push(
+        'View learning modules',
+        'Take a quiz',
+        'Get personalized tips'
       );
       break;
     default:
       suggestions.push(
-        'Check account balance',
-        'View savings goals',
-        'Explore money circles'
+        'Check balance',
+        'Start saving',
+        'Join a circle'
       );
   }
 
   return suggestions;
-}
-
-/**
- * Calculate confidence score for intent classification
- */
-function calculateConfidence(intent: string, entities: Record<string, any>): number {
-  let confidence = 0.6; // Base confidence
-
-  // Adjust based on intent clarity
-  if (intent !== 'general') {
-    confidence += 0.2;
-  }
-
-  // Adjust based on entity presence
-  if (Object.keys(entities).length > 0) {
-    confidence += 0.1 * Object.keys(entities).length;
-  }
-
-  // Cap at 1.0
-  return Math.min(confidence, 1.0);
 }

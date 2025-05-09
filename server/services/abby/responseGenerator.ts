@@ -1,6 +1,7 @@
+
 import { db } from '../../storage';
 import { eq } from 'drizzle-orm';
-import { users, achievements } from '../../schema';
+import { users, achievements, moneyCircles } from '../../schema';
 import { logger } from '../../utils/logger';
 import { ProcessedInput } from './inputProcessor';
 
@@ -19,67 +20,104 @@ interface GeneratedResponse {
   suggestions: string[];
 }
 
-// Enhanced responses with personalization and gamification
 const responseTemplates = {
-  balance: [
-    'Your current balance is {amount}. 💰 {trend}',
-    'You have {amount} available. {insight}'
+  greeting: [
+    '👋 Hi {name}! How can I help you with your MoneyCircles today?',
+    'Hello {name}! Ready to save and achieve your goals together? 🎯'
   ],
-  savings: [
-    'You\'re {progress}% towards your {goalName} goal! 🎯 {encouragement}',
-    'Great progress! You\'ve saved {amount} this month. {tip}'
+  savings_status: [
+    'You\'ve saved R{amount} this month - that\'s {trend}% {comparison} last month! 🌟 {insight}',
+    'Great progress! Your savings are now at R{amount}. {encouragement}'
   ],
-  circles: [
-    'Your {circleName} circle has reached {progress}% of its goal! 🌟 {update}',
-    'The group has saved {amount} so far. {suggestion}'
+  circle_progress: [
+    'Your {circleName} circle is {progress}% complete! The group has saved R{amount} so far. {suggestion}',
+    'Amazing teamwork in {circleName}! You\'re {progress}% towards your goal of R{targetAmount}. {encouragement}'
   ],
   achievement: [
-    '🎉 Congratulations! You\'ve earned the {badge} badge and {points} XP points!',
-    '🏆 Achievement unlocked: {achievement}! You\'ve earned {points} XP.'
+    '🎉 Incredible! You\'ve earned the {badge} badge and {points} XP points! {encouragement}',
+    '🏆 Achievement unlocked: {achievement}! That\'s {points} XP points for you! {nextGoal}'
   ],
   tip: [
-    '💡 Pro tip: {tip}',
-    '📌 Quick tip: {tip}'
+    '💡 Pro tip: {tip} This could help you save an extra R{estimate} monthly.',
+    '📌 Here\'s a smart saving strategy: {tip} {benefit}'
   ],
-  reward: [
-    '🎁 You\'ve earned {points} reward points! {redemption}',
-    '🌟 Special reward unlocked: {reward}! {description}'
+  educational: [
+    '📚 {concept}: {explanation} Want to learn more about this?',
+    'Let me explain {concept} in simple terms: {explanation} {followUp}'
   ]
 };
 
-/**
- * Generate a personalized response based on processed input and user context
- */
+const financialConcepts = {
+  compound_interest: {
+    explanation: 'When your money earns interest, and then that interest earns more interest. It\'s like a snowball effect for your savings!',
+    example: 'If you save R100 monthly with 5% compound interest, after 5 years you\'ll have more than just R6000.'
+  },
+  budgeting: {
+    explanation: 'The 50/30/20 rule suggests using 50% of income for needs, 30% for wants, and 20% for savings.',
+    example: 'On a R10,000 income, try to save at least R2,000 monthly.'
+  },
+  group_saving: {
+    explanation: 'MoneyCircles helps you save with friends, keeping everyone motivated and accountable.',
+    example: 'Groups often save 30% more consistently than individual savers.'
+  }
+};
+
 export async function generateResponse(
   input: ProcessedInput,
   userId: string
 ): Promise<GeneratedResponse> {
   try {
+    // Get comprehensive user context
     const user = await db.query.users.findFirst({
       where: eq(users.id, userId),
       with: {
         achievements: true,
         goals: true,
-        circles: true
+        circles: {
+          with: {
+            members: true
+          }
+        }
       }
     });
 
-    // Generate base response
-    const response = await generateBaseResponse(input, user);
-
-    // Check for achievements
-    const newAchievements = await checkAchievements(input, user);
-    if (newAchievements.length > 0) {
-      response.type = 'achievement';
-      response.metadata = {
-        type: 'achievement',
-        achievement: newAchievements[0].name,
-        points: newAchievements[0].points
-      };
+    if (!user) {
+      throw new Error('User not found');
     }
 
-    // Add personalized suggestions
-    response.suggestions = generatePersonalizedSuggestions(input, user);
+    // Generate personalized response based on intent
+    let response: GeneratedResponse;
+    
+    switch (input.intent) {
+      case 'savings_inquiry':
+        response = await generateSavingsResponse(user, input);
+        break;
+      case 'circle_status':
+        response = await generateCircleResponse(user, input);
+        break;
+      case 'financial_education':
+        response = await generateEducationalResponse(user, input);
+        break;
+      default:
+        response = await generateDefaultResponse(user, input);
+    }
+
+    // Add dynamic suggestions based on context
+    response.suggestions = generateContextualSuggestions(user, input);
+
+    // Check for achievements
+    const newAchievements = await checkForAchievements(user, input);
+    if (newAchievements.length > 0) {
+      response = {
+        ...response,
+        type: 'achievement',
+        metadata: {
+          type: 'achievement',
+          achievement: newAchievements[0].name,
+          points: newAchievements[0].points
+        }
+      };
+    }
 
     return response;
 
@@ -94,70 +132,165 @@ export async function generateResponse(
   }
 }
 
-/**
- * Generate the base response using templates and context
- */
-async function generateBaseResponse(
-  input: ProcessedInput,
-  user: any
-): Promise<GeneratedResponse> {
-  const { intent, entities, context } = input;
-  let template = '';
-  let variables: Record<string, string> = {};
-
-  switch (intent) {
-    case 'balance':
-      template = responseTemplates.balance[Math.floor(Math.random() * responseTemplates.balance.length)];
-      variables = {
-        amount: formatAmount(user.balance),
-        trend: generateBalanceTrend(user),
-        insight: generateFinancialInsight(user)
-      };
-      break;
-
-    case 'savings':
-      template = responseTemplates.savings[Math.floor(Math.random() * responseTemplates.savings.length)];
-      variables = {
-        progress: calculateProgress(user.goals),
-        goalName: user.goals[0]?.name || 'savings',
-        amount: formatAmount(user.monthlySavings),
-        tip: generateSavingsTip(user)
-      };
-      break;
-
-    case 'circles':
-      template = responseTemplates.circles[Math.floor(Math.random() * responseTemplates.circles.length)];
-      variables = {
-        circleName: user.circles[0]?.name || 'money',
-        progress: calculateCircleProgress(user.circles[0]),
-        amount: formatAmount(user.circles[0]?.totalSaved || 0),
-        suggestion: generateCircleSuggestion(user)
-      };
-      break;
-
-    default:
-      return {
-        text: 'I\'m here to help! What would you like to know about your finances?',
-        type: 'text',
-        metadata: { type: 'text' },
-        suggestions: getDefaultSuggestions()
-      };
-  }
-
-  const text = replaceVariables(template, variables);
-
+async function generateSavingsResponse(user: any, input: ProcessedInput): Promise<GeneratedResponse> {
+  const monthlySavings = calculateMonthlySavings(user);
+  const trend = calculateSavingsTrend(user);
+  const template = responseTemplates.savings_status[Math.floor(Math.random() * responseTemplates.savings_status.length)];
+  
   return {
-    text,
+    text: replaceVariables(template, {
+      amount: formatAmount(monthlySavings),
+      trend: Math.abs(trend),
+      comparison: trend >= 0 ? 'more than' : 'less than',
+      insight: generateSavingsInsight(user),
+      encouragement: generateEncouragement(user)
+    }),
     type: 'text',
     metadata: { type: 'text' },
-    suggestions: []
+    suggestions: generateSavingsSuggestions(user)
   };
 }
 
-/**
- * Check for and generate new achievements based on user actions
- */
-async function checkAchievements(input: ProcessedInput, user: any) {
+async function generateCircleResponse(user: any, input: ProcessedInput): Promise<GeneratedResponse> {
+  const activeCircle = user.circles[0];
+  if (!activeCircle) {
+    return {
+      text: 'You\'re not part of any MoneyCircles yet. Would you like to create or join one?',
+      type: 'text',
+      metadata: { type: 'text' },
+      suggestions: ['Create a circle', 'Join a circle', 'Learn about circles']
+    };
+  }
+
+  const progress = calculateCircleProgress(activeCircle);
+  const template = responseTemplates.circle_progress[Math.floor(Math.random() * responseTemplates.circle_progress.length)];
+
+  return {
+    text: replaceVariables(template, {
+      circleName: activeCircle.name,
+      progress,
+      amount: formatAmount(activeCircle.currentAmount),
+      targetAmount: formatAmount(activeCircle.targetAmount),
+      suggestion: generateCircleSuggestion(activeCircle),
+      encouragement: generateGroupEncouragement(progress)
+    }),
+    type: 'text',
+    metadata: { type: 'text' },
+    suggestions: generateCircleSuggestions(activeCircle)
+  };
+}
+
+async function generateEducationalResponse(user: any, input: ProcessedInput): Promise<GeneratedResponse> {
+  const concept = input.entities.concept || 'saving';
+  const conceptInfo = financialConcepts[concept] || financialConcepts.budgeting;
+
+  return {
+    text: replaceVariables(responseTemplates.educational[0], {
+      concept: concept.replace('_', ' '),
+      explanation: conceptInfo.explanation,
+      followUp: 'Would you like to see an example?'
+    }),
+    type: 'text',
+    metadata: { type: 'text' },
+    suggestions: ['Show example', 'Learn more', 'Try it now']
+  };
+}
+
+function generateDefaultResponse(user: any, input: ProcessedInput): GeneratedResponse {
+  return {
+    text: replaceVariables(responseTemplates.greeting[0], {
+      name: user.name || 'there'
+    }),
+    type: 'text',
+    metadata: { type: 'text' },
+    suggestions: getDefaultSuggestions()
+  };
+}
+
+// Helper functions
+function calculateMonthlySavings(user: any): number {
+  // Implementation for calculating monthly savings
+  return user.monthlySavings || 0;
+}
+
+function calculateSavingsTrend(user: any): number {
+  // Implementation for calculating savings trend
+  return 15; // Placeholder: 15% increase
+}
+
+function generateSavingsInsight(user: any): string {
+  // Implementation for generating personalized savings insights
+  return "You're building great saving habits!";
+}
+
+function generateEncouragement(user: any): string {
+  const encouragements = [
+    "Keep up the fantastic work! 🌟",
+    "You're on the right track! 🎯",
+    "Your future self will thank you! 💪"
+  ];
+  return encouragements[Math.floor(Math.random() * encouragements.length)];
+}
+
+function generateGroupEncouragement(progress: number): string {
+  if (progress >= 75) {
+    return "You're so close to your goal! 🎉";
+  } else if (progress >= 50) {
+    return "Halfway there, keep going! 💪";
+  }
+  return "Every contribution counts! 🌱";
+}
+
+function generateCircleSuggestion(circle: any): string {
+  const suggestions = [
+    "Invite more friends to boost your progress!",
+    "Set up automatic contributions to stay on track.",
+    "Share your success story with the group!"
+  ];
+  return suggestions[Math.floor(Math.random() * suggestions.length)];
+}
+
+function generateSavingsSuggestions(user: any): string[] {
+  return [
+    "Set up automatic savings",
+    "Join a money circle",
+    "Track your progress",
+    "Learn saving tips"
+  ];
+}
+
+function generateCircleSuggestions(circle: any): string[] {
+  return [
+    "View circle details",
+    "Make a contribution",
+    "Chat with members",
+    "Share progress"
+  ];
+}
+
+function formatAmount(amount: number): string {
+  return new Intl.NumberFormat('en-ZA', {
+    style: 'currency',
+    currency: 'ZAR'
+  }).format(amount);
+}
+
+function replaceVariables(template: string, variables: Record<string, string | number>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key) => 
+    variables[key]?.toString() || match
+  );
+}
+
+function getDefaultSuggestions(): string[] {
+  return [
+    "Check my balance",
+    "View my circles",
+    "Start saving",
+    "Get financial tips"
+  ];
+}
+
+async function checkForAchievements(user: any, input: ProcessedInput): Promise<any[]> {
   const newAchievements = [];
 
   // Check savings milestones
@@ -178,109 +311,5 @@ async function checkAchievements(input: ProcessedInput, user: any) {
     });
   }
 
-  // Check learning progress
-  if (input.intent === 'learn') {
-    newAchievements.push({
-      name: 'Financial Scholar',
-      points: 50,
-      description: 'Engaged with financial education content'
-    });
-  }
-
   return newAchievements;
-}
-
-/**
- * Generate personalized suggestions based on user context
- */
-function generatePersonalizedSuggestions(input: ProcessedInput, user: any): string[] {
-  const suggestions: string[] = [];
-
-  // Add goal-based suggestions
-  if (user.goals?.length > 0) {
-    suggestions.push(`Track your ${user.goals[0].name} goal progress`);
-  }
-
-  // Add circle-based suggestions
-  if (user.circles?.length > 0) {
-    suggestions.push(`Check your ${user.circles[0].name} circle updates`);
-  }
-
-  // Add level-based suggestions
-  if (user.level < 5) {
-    suggestions.push('Complete more actions to level up');
-  }
-
-  // Add default suggestions if needed
-  while (suggestions.length < 3) {
-    suggestions.push(...getDefaultSuggestions());
-  }
-
-  return suggestions.slice(0, 5); // Return max 5 suggestions
-}
-
-// Helper functions
-function formatAmount(amount: number): string {
-  return new Intl.NumberFormat('en-ZA', {
-    style: 'currency',
-    currency: 'ZAR'
-  }).format(amount);
-}
-
-function generateBalanceTrend(user: any): string {
-  // Implement balance trend analysis
-  return 'Your spending is on track this month.';
-}
-
-function generateFinancialInsight(user: any): string {
-  // Implement personalized financial insights
-  return 'You\'ve reduced your spending by 15% compared to last month.';
-}
-
-function calculateProgress(goals: any[]): number {
-  if (!goals?.length) return 0;
-  return Math.round((goals[0].currentAmount / goals[0].targetAmount) * 100);
-}
-
-function generateSavingsTip(user: any): string {
-  const tips = [
-    'Setting up automatic savings can help you reach your goals faster.',
-    'Try the 50/30/20 rule: 50% needs, 30% wants, 20% savings.',
-    'Joining a money circle can make saving more fun and social!'
-  ];
-  return tips[Math.floor(Math.random() * tips.length)];
-}
-
-function calculateCircleProgress(circle: any): number {
-  if (!circle) return 0;
-  return Math.round((circle.currentAmount / circle.targetAmount) * 100);
-}
-
-function generateCircleSuggestion(user: any): string {
-  const suggestions = [
-    'Invite more friends to boost your circle\'s progress!',
-    'Set up automatic contributions to stay on track.',
-    'Share your success story with the group!'
-  ];
-  return suggestions[Math.floor(Math.random() * suggestions.length)];
-}
-
-function replaceVariables(template: string, variables: Record<string, string>): string {
-  return template.replace(/\{(\w+)\}/g, (match, key) => variables[key] || match);
-}
-
-function getDefaultSuggestions(): string[] {
-  return [
-    'Check your balance',
-    'View savings goals',
-    'Join a money circle',
-    'Send money',
-    'Learn about investing'
-  ];
-}
-import { generateResponse } from '../services/abby/responseGenerator';
-
-const apiKey = process.env.API_KEY;
-if (!apiKey) {
-  throw new Error('API_KEY environment variable is not set');
 }
