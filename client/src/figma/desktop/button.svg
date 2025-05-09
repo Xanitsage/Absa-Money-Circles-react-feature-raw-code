@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="964" viewBox="0 0 1440 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid Layout for Desktop with Detailed Styling -->
+  <g transform="translate(60, 60)">
+    <!-- Default Button with Hover State -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="400" height="48" rx="6" fill="#DC0037"/>
+      <text x="200" y="30" text-anchor="middle" fill="white" font-family="Arial" font-size="16">Default Button</text>
+      <!-- Hover State -->
+      <rect x="420" y="0" width="400" height="48" rx="6" fill="white" stroke="#DC0037"/>
+      <text x="620" y="30" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="16">Default Button (Hover)</text>
+    </g>
+    
+    <!-- Secondary Button with Hover State -->
+    <g transform="translate(0, 80)">
+      <rect x="0" y="0" width="400" height="48" rx="6" fill="white" stroke="#DC0037"/>
+      <text x="200" y="30" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="16">Secondary Button</text>
+      <!-- Hover State -->
+      <rect x="420" y="0" width="400" height="48" rx="6" fill="#DC0037"/>
+      <text x="620" y="30" text-anchor="middle" fill="white" font-family="Arial" font-size="16">Secondary Button (Hover)</text>
+    </g>
+    
+    <!-- Tertiary Button with States -->
+    <g transform="translate(0, 160)">
+      <rect x="0" y="0" width="400" height="48" rx="6" fill="transparent" stroke="#DC0037"/>
+      <text x="200" y="30" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="16">Tertiary Button</text>
+      <!-- Hover State -->
+      <rect x="420" y="0" width="400" height="48" rx="6" fill="#F5F5F5" stroke="#DC0037"/>
+      <text x="620" y="30" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="16">Tertiary Button (Hover)</text>
+    </g>
+    
+    <!-- Size Variants -->
+    <g transform="translate(0, 240)">
+      <!-- Small -->
+      <rect x="0" y="0" width="200" height="40" rx="6" fill="#DC0037"/>
+      <text x="100" y="25" text-anchor="middle" fill="white" font-family="Arial" font-size="14">Small</text>
+      
+      <!-- Default -->
+      <rect x="220" y="0" width="300" height="48" rx="6" fill="#DC0037"/>
+      <text x="370" y="30" text-anchor="middle" fill="white" font-family="Arial" font-size="16">Default</text>
+      
+      <!-- Large -->
+      <rect x="540" y="0" width="400" height="56" rx="6" fill="#DC0037"/>
+      <text x="740" y="35" text-anchor="middle" fill="white" font-family="Arial" font-size="18">Large</text>
+    </g>
+    
+    <!-- Icon Buttons with States -->
+    <g transform="translate(0, 320)">
+      <!-- Default -->
+      <rect x="0" y="0" width="48" height="48" rx="6" fill="#DC0037"/>
+      <circle cx="24" cy="24" r="12" fill="white"/>
+      
+      <!-- Hover -->
+      <rect x="68" y="0" width="48" height="48" rx="6" fill="white" stroke="#DC0037"/>
+      <circle cx="92" cy="24" r="12" fill="#DC0037"/>
+      
+      <!-- Active -->
+      <rect x="136" y="0" width="48" height="48" rx="6" fill="#B30027"/>
+      <circle cx="160" cy="24" r="12" fill="white"/>
+    </g>
+  </g>
+</svg>

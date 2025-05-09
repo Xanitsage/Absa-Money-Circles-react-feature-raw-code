@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="964" viewBox="0 0 1440 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1440" height="964" fill="#FFFFFF"/>
+  
+  <!-- Bottom Navigation Bar -->
+  <g transform="translate(0, 884)">
+    <!-- Navigation Background -->
+    <rect width="1440" height="80" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Navigation Container with Max Width -->
+    <g transform="translate(320, 0)">
+      <!-- Home Button -->
+      <g transform="translate(60, 10)">
+        <rect width="160" height="60" rx="14" fill="#FFFFFF" class="hover-bg"/>
+        <g transform="translate(40, 12)">
+          <path d="M52 15L60 22V33H44V22L52 15Z" stroke="#DC0037" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <text x="80" y="42" font-family="Arial" font-size="16" fill="#DC0037" text-anchor="middle">Home</text>
+      </g>
+      
+      <!-- Circles Button -->
+      <g transform="translate(260, 10)">
+        <rect width="160" height="60" rx="14" fill="#FFFFFF" class="hover-bg"/>
+        <g transform="translate(40, 12)">
+          <circle cx="52" cy="24" r="4" stroke="#6B7280" stroke-width="2"/>
+          <path d="M56 33V31C56 29.9391 55.5786 28.9217 54.8284 28.1716C54.0783 27.4214 53.0609 27 52 27H48C46.9391 27 45.9217 27.4214 45.1716 28.1716C44.4214 28.9217 44 29.9391 44 31V33" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <text x="80" y="42" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">Circles</text>
+      </g>
+      
+      <!-- Add Button -->
+      <g transform="translate(460, -12)">
+        <circle cx="40" cy="40" r="40" fill="#DC0037" class="add-button-hover"/>
+        <path d="M40 24V56M24 40H56" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      
+      <!-- Pay Button -->
+      <g transform="translate(660, 10)">
+        <rect width="160" height="60" rx="14" fill="#FFFFFF" class="hover-bg"/>
+        <g transform="translate(40, 12)">
+          <path d="M44 20C44 18.9391 44.4214 17.9217 45.1716 17.1716C45.9217 16.4214 46.9391 16 48 16H56C57.0609 16 58.0783 16.4214 58.8284 17.1716C59.5786 17.9217 60 18.9391 60 20V28C60 29.0609 59.5786 30.0783 58.8284 30.8284C58.0783 31.5786 57.0609 32 56 32H48C46.9391 32 45.9217 31.5786 45.1716 30.8284C44.4214 30.0783 44 29.0609 44 28V20Z" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <text x="80" y="42" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">Pay</text>
+      </g>
+      
+      <!-- Profile Button -->
+      <g transform="translate(860, 10)">
+        <rect width="160" height="60" rx="14" fill="#FFFFFF" class="hover-bg"/>
+        <g transform="translate(40, 12)">
+          <circle cx="52" cy="20" r="4" stroke="#6B7280" stroke-width="2"/>
+          <path d="M60 33V31C60 29.9391 59.5786 28.9217 58.8284 28.1716C58.0783 27.4214 57.0609 27 56 27H48C46.9391 27 45.9217 27.4214 45.1716 28.1716C44.4214 28.9217 44 29.9391 44 31V33" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <text x="80" y="42" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">Profile</text>
+      </g>
+    </g>
+    
+    <!-- Interactive Effects Style -->
+    <style>
+      .hover-bg:hover {
+        fill: rgba(0, 0, 0, 0.05);
+        transition: fill 0.2s ease-in-out;
+      }
+      .add-button-hover:hover {
+        fill: #b30030;
+        transition: fill 0.2s ease-in-out;
+      }
+      text {
+        user-select: none;
+      }
+    </style>
+  </g>
+</svg>

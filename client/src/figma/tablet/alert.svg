@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="980" height="964" viewBox="0 0 980 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid Layout for Tablet Alerts -->
+  <g transform="translate(40, 40)">
+    <!-- Default Alert Row -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="440" height="100" rx="8" fill="white" stroke="#E5E5E5"/>
+      <text x="24" y="32" font-family="Arial" font-size="16" font-weight="500" fill="#333333">Alert Title</text>
+      <text x="24" y="64" font-family="Arial" font-size="14" fill="#666666">This is a default alert message with important information for tablet view.</text>
+    </g>
+
+    <!-- Destructive Alert Row -->
+    <g transform="translate(460, 0)">
+      <rect x="0" y="0" width="440" height="100" rx="8" fill="white" stroke="#DC0037" stroke-opacity="0.5"/>
+      <text x="24" y="32" font-family="Arial" font-size="16" font-weight="500" fill="#DC0037">Error Alert</text>
+      <text x="24" y="64" font-family="Arial" font-size="14" fill="#DC0037">This is a destructive alert indicating an error state.</text>
+    </g>
+
+    <!-- Alert with Icon Row 1 -->
+    <g transform="translate(0, 120)">
+      <rect x="0" y="0" width="440" height="100" rx="8" fill="white" stroke="#E5E5E5"/>
+      <circle cx="32" cy="32" r="16" fill="#DC0037"/>
+      <text x="64" y="32" font-family="Arial" font-size="16" font-weight="500" fill="#333333">Alert with Icon</text>
+      <text x="64" y="64" font-family="Arial" font-size="14" fill="#666666">This alert includes an icon for better visibility.</text>
+    </g>
+
+    <!-- Alert with Actions Row 1 -->
+    <g transform="translate(460, 120)">
+      <rect x="0" y="0" width="440" height="120" rx="8" fill="white" stroke="#E5E5E5"/>
+      <text x="24" y="32" font-family="Arial" font-size="16" font-weight="500" fill="#333333">Action Required</text>
+      <text x="24" y="64" font-family="Arial" font-size="14" fill="#666666">This alert requires user action. Please review and respond.</text>
+      <!-- Action Buttons -->
+      <rect x="24" y="80" width="100" height="32" rx="6" fill="#DC0037"/>
+      <text x="74" y="100" text-anchor="middle" fill="white" font-family="Arial" font-size="14">Confirm</text>
+      <rect x="134" y="80" width="100" height="32" rx="6" fill="white" stroke="#DC0037"/>
+      <text x="184" y="100" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="14">Cancel</text>
+    </g>
+  </g>
+</svg>

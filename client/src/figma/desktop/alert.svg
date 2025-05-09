@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="964" viewBox="0 0 1440 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid Layout for Desktop Alerts with Detailed Styling -->
+  <g transform="translate(60, 60)">
+    <!-- Default Alert Section -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="640" height="120" rx="8" fill="white" stroke="#E5E5E5"/>
+      <text x="32" y="40" font-family="Arial" font-size="18" font-weight="500" fill="#333333">Alert Title</text>
+      <text x="32" y="76" font-family="Arial" font-size="16" fill="#666666">This is a default alert message with important information for desktop view.</text>
+    </g>
+
+    <!-- Destructive Alert Section -->
+    <g transform="translate(680, 0)">
+      <rect x="0" y="0" width="640" height="120" rx="8" fill="white" stroke="#DC0037" stroke-opacity="0.5"/>
+      <text x="32" y="40" font-family="Arial" font-size="18" font-weight="500" fill="#DC0037">Error Alert</text>
+      <text x="32" y="76" font-family="Arial" font-size="16" fill="#DC0037">This is a destructive alert indicating an error state with detailed information.</text>
+    </g>
+
+    <!-- Alert with Icon and Hover State -->
+    <g transform="translate(0, 140)">
+      <!-- Default State -->
+      <rect x="0" y="0" width="640" height="120" rx="8" fill="white" stroke="#E5E5E5"/>
+      <circle cx="40" cy="40" r="20" fill="#DC0037"/>
+      <text x="80" y="40" font-family="Arial" font-size="18" font-weight="500" fill="#333333">Alert with Icon</text>
+      <text x="80" y="76" font-family="Arial" font-size="16" fill="#666666">This alert includes an icon for better visibility and user experience.</text>
+      
+      <!-- Hover State -->
+      <rect x="680" y="0" width="640" height="120" rx="8" fill="#FAFAFA" stroke="#E5E5E5"/>
+      <circle cx="720" cy="40" r="20" fill="#DC0037"/>
+      <text x="760" y="40" font-family="Arial" font-size="18" font-weight="500" fill="#333333">Alert with Icon (Hover)</text>
+      <text x="760" y="76" font-family="Arial" font-size="16" fill="#666666">Hover state with subtle background change.</text>
+    </g>
+
+    <!-- Alert with Actions -->
+    <g transform="translate(0, 280)">
+      <rect x="0" y="0" width="640" height="160" rx="8" fill="white" stroke="#E5E5E5"/>
+      <text x="32" y="40" font-family="Arial" font-size="18" font-weight="500" fill="#333333">Action Required</text>
+      <text x="32" y="76" font-family="Arial" font-size="16" fill="#666666">This alert requires user action. Please review the information and respond accordingly.</text>
+      <!-- Action Buttons with Hover States -->
+      <g transform="translate(32, 100)">
+        <!-- Primary Button -->
+        <rect x="0" y="0" width="120" height="40" rx="6" fill="#DC0037"/>
+        <text x="60" y="25" text-anchor="middle" fill="white" font-family="Arial" font-size="16">Confirm</text>
+        <!-- Secondary Button -->
+        <rect x="140" y="0" width="120" height="40" rx="6" fill="white" stroke="#DC0037"/>
+        <text x="200" y="25" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="16">Cancel</text>
+      </g>
+    </g>
+
+    <!-- Alert with Progress -->
+    <g transform="translate(680, 280)">
+      <rect x="0" y="0" width="640" height="160" rx="8" fill="white" stroke="#E5E5E5"/>
+      <text x="32" y="40" font-family="Arial" font-size="18" font-weight="500" fill="#333333">Processing</text>
+      <text x="32" y="76" font-family="Arial" font-size="16" fill="#666666">Operation in progress. Please wait while we complete your request.</text>
+      <!-- Progress Bar -->
+      <rect x="32" y="100" width="576" height="8" rx="4" fill="#F5F5F5"/>
+      <rect x="32" y="100" width="288" height="8" rx="4" fill="#DC0037"/>
+    </g>
+  </g>
+</svg>

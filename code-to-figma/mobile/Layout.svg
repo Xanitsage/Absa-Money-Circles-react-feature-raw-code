@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="964" viewBox="0 0 360 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="360" height="964" fill="#FFFFFF"/>
+  
+  <!-- Header -->
+  <g transform="translate(0, 0)">
+    <rect width="360" height="48" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Back Button (when not on home/circles/create) -->
+    <g transform="translate(8, 8)" class="back-button">
+      <circle cx="16" cy="16" r="16" fill="#F3F4F6"/>
+      <path d="M18 12L12 16L18 20" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    
+    <!-- Logo (on home/circles/create) -->
+    <g transform="translate(8, 8)" class="logo">
+      <image href="../assets/absa_logo.png" width="32" height="32"/>
+    </g>
+    
+    <!-- Title -->
+    <text x="56" y="30" font-family="Arial" font-size="18" font-weight="600" fill="#1F2937">Money Circles</text>
+    
+    <!-- Right Actions -->
+    <g transform="translate(280, 8)">
+      <!-- Theme Toggle -->
+      <circle cx="16" cy="16" r="16" fill="#F3F4F6" class="theme-toggle"/>
+      
+      <!-- Abby Assistant -->
+      <g transform="translate(40, 0)">
+        <circle cx="16" cy="16" r="16" fill="#F3F4F6"/>
+        <image href="../assets/absa_abby_logo.png" x="8" y="8" width="16" height="16"/>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Main Content Area -->
+  <g transform="translate(0, 48)">
+    <rect x="16" y="16" width="328" height="804" fill="#FFFFFF"/>
+    <!-- Content placeholder - actual content would be rendered here -->
+    <rect x="16" y="16" width="328" height="804" fill="#F3F4F6" opacity="0.5"/>
+  </g>
+  
+  <!-- Bottom Navigation -->
+  <g transform="translate(0, 884)">
+    <use href="#BottomNavigation"/>
+  </g>
+  
+  <!-- Styles -->
+  <style>
+    .back-button:hover circle,
+    .theme-toggle:hover {
+      fill: #E5E7EB;
+    }
+    text {
+      user-select: none;
+    }
+  </style>
+</svg>

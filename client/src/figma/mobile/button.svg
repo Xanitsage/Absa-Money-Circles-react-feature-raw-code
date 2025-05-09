@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="964" viewBox="0 0 360 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Default Button -->
+  <rect x="20" y="50" width="320" height="40" rx="6" fill="#DC0037"/>
+  <text x="160" y="75" text-anchor="middle" fill="white" font-family="Arial" font-size="14">Default Button</text>
+  
+  <!-- Secondary Button -->
+  <rect x="20" y="110" width="320" height="40" rx="6" fill="white" stroke="#DC0037"/>
+  <text x="160" y="135" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="14">Secondary Button</text>
+  
+  <!-- Tertiary Button -->
+  <rect x="20" y="170" width="320" height="40" rx="6" fill="transparent" stroke="#DC0037"/>
+  <text x="160" y="195" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="14">Tertiary Button</text>
+  
+  <!-- Small Button -->
+  <rect x="20" y="230" width="150" height="36" rx="6" fill="#DC0037"/>
+  <text x="95" y="253" text-anchor="middle" fill="white" font-family="Arial" font-size="12">Small Button</text>
+  
+  <!-- Large Button -->
+  <rect x="20" y="286" width="320" height="48" rx="6" fill="#DC0037"/>
+  <text x="160" y="315" text-anchor="middle" fill="white" font-family="Arial" font-size="16">Large Button</text>
+  
+  <!-- Icon Button -->
+  <rect x="20" y="354" width="40" height="40" rx="6" fill="#DC0037"/>
+  <circle cx="40" cy="374" r="10" fill="white"/>
+</svg>

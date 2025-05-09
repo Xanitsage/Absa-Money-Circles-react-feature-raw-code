@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="964" viewBox="0 0 360 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Default Alert -->
+  <g transform="translate(20, 40)">
+    <rect x="0" y="0" width="320" height="80" rx="8" fill="white" stroke="#E5E5E5"/>
+    <text x="16" y="24" font-family="Arial" font-size="14" font-weight="500" fill="#333333">Alert Title</text>
+    <text x="16" y="48" font-family="Arial" font-size="12" fill="#666666">This is a default alert message with important information.</text>
+  </g>
+
+  <!-- Destructive Alert -->
+  <g transform="translate(20, 140)">
+    <rect x="0" y="0" width="320" height="80" rx="8" fill="white" stroke="#DC0037" stroke-opacity="0.5"/>
+    <text x="16" y="24" font-family="Arial" font-size="14" font-weight="500" fill="#DC0037">Error Alert</text>
+    <text x="16" y="48" font-family="Arial" font-size="12" fill="#DC0037">This is a destructive alert indicating an error state.</text>
+  </g>
+
+  <!-- Alert with Icon -->
+  <g transform="translate(20, 240)">
+    <rect x="0" y="0" width="320" height="80" rx="8" fill="white" stroke="#E5E5E5"/>
+    <circle cx="24" cy="24" r="12" fill="#DC0037"/>
+    <text x="48" y="24" font-family="Arial" font-size="14" font-weight="500" fill="#333333">Alert with Icon</text>
+    <text x="48" y="48" font-family="Arial" font-size="12" fill="#666666">This alert includes an icon for better visibility.</text>
+  </g>
+</svg>

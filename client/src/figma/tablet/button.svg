@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="980" height="964" viewBox="0 0 980 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid Layout for Tablet -->
+  <g transform="translate(40, 40)">
+    <!-- Default Button -->
+    <rect x="0" y="0" width="440" height="44" rx="6" fill="#DC0037"/>
+    <text x="220" y="28" text-anchor="middle" fill="white" font-family="Arial" font-size="16">Default Button</text>
+    
+    <!-- Secondary Button -->
+    <rect x="460" y="0" width="440" height="44" rx="6" fill="white" stroke="#DC0037"/>
+    <text x="680" y="28" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="16">Secondary Button</text>
+    
+    <!-- Tertiary Button -->
+    <rect x="0" y="64" width="440" height="44" rx="6" fill="transparent" stroke="#DC0037"/>
+    <text x="220" y="92" text-anchor="middle" fill="#DC0037" font-family="Arial" font-size="16">Tertiary Button</text>
+    
+    <!-- Small Button -->
+    <rect x="460" y="64" width="200" height="40" rx="6" fill="#DC0037"/>
+    <text x="560" y="90" text-anchor="middle" fill="white" font-family="Arial" font-size="14">Small Button</text>
+    
+    <!-- Large Button -->
+    <rect x="0" y="128" width="440" height="48" rx="6" fill="#DC0037"/>
+    <text x="220" y="158" text-anchor="middle" fill="white" font-family="Arial" font-size="18">Large Button</text>
+    
+    <!-- Icon Button Grid -->
+    <rect x="460" y="128" width="44" height="44" rx="6" fill="#DC0037"/>
+    <circle cx="482" cy="150" r="11" fill="white"/>
+    
+    <rect x="520" y="128" width="44" height="44" rx="6" fill="#DC0037"/>
+    <circle cx="542" cy="150" r="11" fill="white"/>
+  </g>
+</svg>
