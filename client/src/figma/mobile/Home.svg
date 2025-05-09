@@ -1,0 +1,25 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="964" viewBox="0 0 360 964" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <rect width="360" height="56" fill="white"/>
+  <rect width="360" height="1" transform="translate(0 56)" fill="#E5E7EB"/>
+  <image href="../assets/absa_logo.png" x="16" y="12" width="32" height="32"/>
+  <text x="56" y="34" font-family="Inter" font-size="18" font-weight="600" fill="#111827">Money Circles</text>
+  
+  <!-- Wallet Card -->
+  <rect x="16" y="72" width="328" height="140" rx="12" fill="#DC0037"/>
+  <text x="32" y="100" font-family="Inter" font-size="14" fill="white" opacity="0.8">Available Balance</text>
+  <text x="32" y="136" font-family="Inter" font-size="32" font-weight="700" fill="white">R 25,420.00</text>
+  <rect x="32" y="156" width="280" height="1" fill="white" opacity="0.2"/>
+  
+  <!-- Quick Actions -->
+  <g transform="translate(32, 164)">
+    <!-- Add Money -->
+    <circle cx="20" cy="20" r="20" fill="white" opacity="0.2"/>
+    <path d="M20 13V27M13 20H27" stroke="white" stroke-width="2"/>
+    <text x="0" y="50" font-family="Inter" font-size="12" fill="white">Add Money</text>
+  </g>
+  
+  <!-- Continue remaining mobile page components -->
+</svg>
