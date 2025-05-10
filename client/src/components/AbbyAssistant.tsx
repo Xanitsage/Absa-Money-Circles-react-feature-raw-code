@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -161,6 +161,41 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
     }
   }, [recognition, toast]);
 
+  const handleSend = useCallback((voiceInput?: string) => {
+    const messageText = voiceInput || input;
+    if (!messageText.trim()) return;
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      text: messageText,
+      sender: "user",
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+
+    // Handle incoming response
+    fetch('/api/abby/message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: messageText })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.response) {
+        // Speak the response with natural voice
+        speakMessage(data.response.text);
+        setMessages(prev => [...prev, {
+          id: Date.now().toString(),
+          text: data.response.text,
+          sender: "assistant",
+          timestamp: new Date()
+        }]);
+      }
+    });
+  }, [input, setMessages, setInput, speakMessage]);
+
   useEffect(() => {
     if (!recognition) return;
 
@@ -182,8 +217,6 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
       recognition.onend = null;
     };
   }, [recognition, handleSend]);
-
-  const handleSend = (voiceInput?: string) => {
     const messageText = voiceInput || input;
     if (!messageText.trim()) return;
 
