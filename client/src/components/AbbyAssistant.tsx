@@ -83,11 +83,20 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
   };
 
   // Speech synthesis setup
-  const synth = window.speechSynthesis;
-  const recognition = new (window as any).webkitSpeechRecognition();
+  const [synth] = useState(() => window.speechSynthesis);
+  const [recognition] = useState(() => {
+    if (typeof window !== 'undefined' && 'webkitSpeechRecognition' in window) {
+      const recognition = new (window as any).webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+      return recognition;
+    }
+    return null;
+  });
 
   // Configure speech synthesis for a natural female voice
-  const configureSpeech = () => {
+  const configureSpeech = useCallback(() => {
     const voices = synth.getVoices();
     const femaleVoice = voices.find(voice => 
       voice.name.includes('Female') || 
@@ -100,7 +109,19 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
       rate: 1.0,  // Natural speaking rate
       volume: 1.0
     };
-  };
+  }, [synth]);
+
+  useEffect(() => {
+    // Load voices when component mounts
+    const loadVoices = () => {
+      synth.getVoices();
+    };
+    loadVoices();
+    synth.onvoiceschanged = loadVoices;
+    return () => {
+      synth.onvoiceschanged = null;
+    };
+  }, [synth]);
 
   const speakMessage = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -122,19 +143,45 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
     synth.speak(utterance);
   };
 
-  const startVoiceRecognition = () => {
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
+  const startVoiceRecognition = useCallback(() => {
+    if (!recognition) {
+      toast({
+        title: "Speech Recognition Not Available",
+        description: "Your browser doesn't support speech recognition.",
+        variant: "destructive"
+      });
+      return;
+    }
 
-    recognition.start();
-  };
+    try {
+      recognition.start();
+    } catch (error) {
+      recognition.stop();
+      setTimeout(() => recognition.start(), 100);
+    }
+  }, [recognition, toast]);
 
-  recognition.onresult = (event: any) => {
-    const transcript = event.results[0][0].transcript;
-    setInput(transcript);
-    handleSend(transcript);
-  };
+  useEffect(() => {
+    if (!recognition) return;
+
+    const handleResult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      handleSend(transcript);
+    };
+
+    const handleEnd = () => {
+      recognition?.stop();
+    };
+
+    recognition.onresult = handleResult;
+    recognition.onend = handleEnd;
+
+    return () => {
+      recognition.onresult = null;
+      recognition.onend = null;
+    };
+  }, [recognition, handleSend]);
 
   const handleSend = (voiceInput?: string) => {
     const messageText = voiceInput || input;
