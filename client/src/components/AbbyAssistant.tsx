@@ -86,6 +86,34 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
   const synth = window.speechSynthesis;
   const recognition = new (window as any).webkitSpeechRecognition();
 
+  // Configure speech synthesis for a natural female voice
+  const configureSpeech = () => {
+    const voices = synth.getVoices();
+    const femaleVoice = voices.find(voice => 
+      voice.name.includes('Female') || 
+      voice.name.includes('Samantha') || 
+      voice.name.includes('Google UK English Female')
+    );
+    return {
+      voice: femaleVoice || voices[0],
+      pitch: 1.1, // Slightly higher pitch for female voice
+      rate: 1.0,  // Natural speaking rate
+      volume: 1.0
+    };
+  };
+
+  const speakMessage = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voiceConfig = configureSpeech();
+    
+    utterance.voice = voiceConfig.voice;
+    utterance.pitch = voiceConfig.pitch;
+    utterance.rate = voiceConfig.rate;
+    utterance.volume = voiceConfig.volume;
+    
+    synth.speak(utterance);
+  };
+
   const speakText = (text: string, voiceConfig?: any) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.pitch = voiceConfig?.pitch || 1;
@@ -131,8 +159,8 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
     .then(res => res.json())
     .then(data => {
       if (data.response) {
-        // Speak the response
-        speakText(data.response.text, data.response.voiceConfig);
+        // Speak the response with natural voice
+        speakMessage(data.response.text);
         setMessages(prev => [...prev, {
           id: Date.now().toString(),
           text: data.response.text,
