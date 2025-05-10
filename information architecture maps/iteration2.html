@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absa Money Circles - Information Architecture Map (Iteration 2)</title>
+    <style>
+        :root {
+            --page-margin: 3%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            padding: var(--page-margin);
+            min-height: 100vh;
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            background: white;
+            padding: calc(var(--page-margin) * 0.75);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 1080px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #DC0037;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .flow-section {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .flow-title {
+            color: #DC0037;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .step {
+            background: white;
+            border: 2px solid #DC0037;
+            border-radius: 8px;
+            padding: 1rem;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step.active {
+            background: #DC0037;
+            color: white;
+        }
+
+        .arrow {
+            flex: 1;
+            height: 2px;
+            background: #DC0037;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 8px solid #DC0037;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        .interaction {
+            font-size: 0.875rem;
+            color: #666;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .legend {
+            margin-top: 3rem;
+            padding: 1rem;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .legend h3 {
+            margin-bottom: 1rem;
+            color: #DC0037;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 1rem;
+        }
+
+        .notes {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #fff5f5;
+            border-radius: 8px;
+            border-left: 4px solid #DC0037;
+        }
+
+        .notes h3 {
+            color: #DC0037;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Absa Money Circles - User Flow Architecture</h1>
+        
+        <div class="flow-container">
+            <!-- Circle Creation Flow -->
+            <div class="flow-section">
+                <h2 class="flow-title">Money Circle Creation Flow</h2>
+                <div class="flow-diagram">
+                    <div class="step active">Start Circle</div>
+                    <div class="arrow"></div>
+                    <div class="step">Set Details
+                        <div class="interaction">Name, Goal, Duration</div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="step">Invite Members
+                        <div class="interaction">Share Code/Link</div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="step">Circle Active
+                        <div class="interaction">Start Saving</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Savings Management Flow -->
+            <div class="flow-section">
+                <h2 class="flow-title">Savings Management Flow</h2>
+                <div class="flow-diagram">
+                    <div class="step active">View Circle</div>
+                    <div class="arrow"></div>
+                    <div class="step">Add Money
+                        <div class="interaction">Payment Methods</div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="step">Track Progress
+                        <div class="interaction">Goals & Milestones</div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="step">Earn Rewards
+                        <div class="interaction">Points & Badges</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Abby Assistant Interaction Flow -->
+            <div class="flow-section">
+                <h2 class="flow-title">Abby Assistant Interaction Flow</h2>
+                <div class="flow-diagram">
+                    <div class="step active">Open Chat</div>
+                    <div class="arrow"></div>
+                    <div class="step">Ask Question
+                        <div class="interaction">Text/Voice Input</div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="step">Get Response
+                        <div class="interaction">AI Processing</div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="step">Take Action
+                        <div class="interaction">Follow Guidance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #DC0037;"></div>
+                <span>Active/Current Step</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="border: 2px solid #DC0037;"></div>
+                <span>Process Step</span>
+            </div>
+        </div>
+
+        <div class="notes">
+            <h3>Key Interaction Notes</h3>
+            <ul style="list-style: none; margin-left: 1rem;">
+                <li>• Each flow represents a core user journey within the app</li>
+                <li>• Steps are designed to be intuitive and user-friendly</li>
+                <li>• Progress tracking and rewards are integrated throughout</li>
+                <li>• Abby Assistant provides guidance at every step</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Add hover effects and interactivity
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('mouseover', () => {
+                step.style.transform = 'scale(1.05)';
+                step.style.transition = 'transform 0.2s ease';
+            });
+
+            step.addEventListener('mouseout', () => {
+                step.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absa Money Circles - Site Map</title>
+    <style>
+        :root {
+            --page-margin: 3%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            padding: var(--page-margin);
+            min-height: 100vh;
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            background: white;
+            padding: calc(var(--page-margin) * 0.75);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 1080px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #DC0037;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .site-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .node {
+            position: relative;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #DC0037;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .node-title {
+            color: #DC0037;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: flex;
+            gap: 2rem;
+            position: relative;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .level::before {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            width: 2px;
+            height: 1rem;
+            background: #DC0037;
+        }
+
+        .level:first-child::before {
+            display: none;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .subsection {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .feature {
+            padding: 0.75rem;
+            background: white;
+            border: 1px solid #666;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+
+        .connector {
+            position: absolute;
+            background: #DC0037;
+        }
+
+        .vertical-connector {
+            width: 2px;
+            height: 2rem;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .horizontal-connector {
+            height: 2px;
+            width: 100%;
+            bottom: -1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Absa Money Circles - Site Map</h1>
+        
+        <div class="site-map">
+            <!-- Landing & Authentication -->
+            <div class="level">
+                <div class="node">
+                    <div class="node-title">Landing & Authentication</div>
+                    <div class="node-description">Entry Point</div>
+                </div>
+            </div>
+
+            <!-- Main Sections -->
+            <div class="level">
+                <div class="section">
+                    <div class="node">
+                        <div class="node-title">Dashboard</div>
+                        <div class="node-description">Overview</div>
+                    </div>
+                    <div class="subsection">
+                        <div class="feature">Activity Feed</div>
+                        <div class="feature">Quick Actions</div>
+                        <div class="feature">Statistics</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="node">
+                        <div class="node-title">Money Circles</div>
+                        <div class="node-description">Management</div>
+                    </div>
+                    <div class="subsection">
+                        <div class="feature">Create Circle</div>
+                        <div class="feature">Join Circle</div>
+                        <div class="feature">Circle Details</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="node">
+                        <div class="node-title">Savings Goals</div>
+                        <div class="node-description">Planning</div>
+                    </div>
+                    <div class="subsection">
+                        <div class="feature">Set Goals</div>
+                        <div class="feature">Track Progress</div>
+                        <div class="feature">Achievements</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Features -->
+            <div class="level">
+                <div class="section">
+                    <div class="node">
+                        <div class="node-title">Abby Assistant</div>
+                        <div class="node-description">AI Support</div>
+                    </div>
+                    <div class="subsection">
+                        <div class="feature">Financial Tips</div>
+                        <div class="feature">Circle Guidance</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="node">
+                        <div class="node-title">Profile</div>
+                        <div class="node-description">User Settings</div>
+                    </div>
+                    <div class="subsection">
+                        <div class="feature">Account Info</div>
+                        <div class="feature">Preferences</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="node">
+                        <div class="node-title">Notifications</div>
+                        <div class="node-description">Updates</div>
+                    </div>
+                    <div class="subsection">
+                        <div class="feature">Circle Updates</div>
+                        <div class="feature">Goal Alerts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
