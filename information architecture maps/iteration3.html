@@ -6,24 +6,27 @@
     <title>Absa Money Circles - User Journey Map (Iteration 3)</title>
     <style>
         :root {
-            --page-margin: 3%;
+            --primary: #DC0037;
+            --background: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         body {
             background: #f5f5f5;
-            padding: var(--page-margin);
             min-height: 100vh;
-            max-width: 1920px;
-            margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: center;
+            padding: 2rem;
         }
 
         .container {
@@ -32,66 +35,79 @@
             height: calc(100vh - 6%);
             max-height: 1080px;
             margin: 3%;
-            background: white;
-            padding: calc(var(--page-margin) * 0.75);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px var(--shadow);
             overflow-y: auto;
-            position: relative;
         }
 
         h1 {
-            color: #DC0037;
+            color: var(--primary);
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            font-size: 2rem;
         }
 
         .journey-map {
-            display: flex;
-            flex-direction: column;
+            display: grid;
             gap: 3rem;
         }
 
         .journey-phase {
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 2rem;
+            transition: all 0.3s ease;
         }
 
-        .phase-title {
-            color: #DC0037;
-            margin-bottom: 1.5rem;
-            font-size: 1.25rem;
+        .journey-phase:hover {
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .phase-header {
             display: flex;
             align-items: center;
             gap: 1rem;
+            margin-bottom: 2rem;
         }
 
         .phase-icon {
-            width: 32px;
-            height: 32px;
-            background: #DC0037;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            font-weight: bold;
         }
 
-        .journey-grid {
+        .phase-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .steps-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .journey-step {
-            background: white;
-            border: 2px solid #DC0037;
+        .step {
+            background: var(--background);
+            border: 2px solid var(--primary);
             border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
+            padding: 1.5rem;
             position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .step:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px var(--shadow);
         }
 
         .step-number {
@@ -99,7 +115,7 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background: #DC0037;
+            background: var(--primary);
             color: white;
             width: 24px;
             height: 24px;
@@ -110,56 +126,55 @@
             font-size: 0.875rem;
         }
 
+        .step-content {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
         .step-title {
-            margin-top: 0.5rem;
+            color: var(--primary);
             font-weight: 600;
-            color: #DC0037;
+            margin-bottom: 0.5rem;
         }
 
         .step-description {
-            margin-top: 0.5rem;
-            font-size: 0.875rem;
-            color: #666;
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.5;
         }
 
-        .gamification-elements {
+        .rewards {
             display: flex;
             gap: 1rem;
+            justify-content: center;
             margin-top: 1rem;
             padding-top: 1rem;
-            border-top: 1px dashed #e0e0e0;
+            border-top: 1px dashed var(--border);
         }
 
-        .gamification-item {
-            flex: 1;
+        .reward {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.875rem;
-            color: #666;
+            color: var(--text);
         }
 
-        .gamification-icon {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #f8f8f8;
-            color: #DC0037;
+        .reward-icon {
+            color: var(--primary);
         }
 
         .emotion-track {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-            padding: 1rem;
             background: #f8f8f8;
-            border-radius: 8px;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         }
 
-        .emotion-point {
+        .emotion {
             text-align: center;
         }
 
@@ -169,197 +184,116 @@
         }
 
         .emotion-label {
-            font-size: 0.75rem;
-            color: #666;
+            font-size: 0.875rem;
+            color: var(--text);
         }
 
-        .notes {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #fff5f5;
-            border-radius: 8px;
-            border-left: 4px solid #DC0037;
-        }
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
 
-        .notes h3 {
-            color: #DC0037;
-            margin-bottom: 0.5rem;
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .emotion-track {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Absa Money Circles - Detailed User Journey Map</h1>
-        
+        <h1>Absa Money Circles - User Journey Map</h1>
+
         <div class="journey-map">
-            <!-- Onboarding Phase -->
-            <div class="journey-phase">
-                <h2 class="phase-title">
+            <section class="journey-phase">
+                <div class="phase-header">
                     <div class="phase-icon">1</div>
-                    Onboarding Journey
-                </h2>
-                <div class="journey-grid">
-                    <div class="journey-step">
+                    <h2 class="phase-title">Discovery & Onboarding</h2>
+                </div>
+
+                <div class="steps-grid">
+                    <div class="step">
                         <div class="step-number">1</div>
-                        <div class="step-title">Welcome</div>
-                        <div class="step-description">First interaction with Abby Assistant</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">🎯</div>
-                                <span>+50 XP</span>
+                        <div class="step-content">
+                            <h3 class="step-title">App Download</h3>
+                            <p class="step-description">Find and install from app store</p>
+                            <div class="rewards">
+                                <div class="reward">
+                                    <span class="reward-icon">⭐</span>
+                                    <span>Welcome Points</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="journey-step">
+
+                    <div class="step">
                         <div class="step-number">2</div>
-                        <div class="step-title">Profile Setup</div>
-                        <div class="step-description">Personalize savings preferences</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">🏆</div>
-                                <span>First Steps Badge</span>
+                        <div class="step-content">
+                            <h3 class="step-title">Registration</h3>
+                            <p class="step-description">Quick account setup</p>
+                            <div class="rewards">
+                                <div class="reward">
+                                    <span class="reward-icon">🏆</span>
+                                    <span>First Steps Badge</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="journey-step">
+
+                    <div class="step">
                         <div class="step-number">3</div>
-                        <div class="step-title">Goal Setting</div>
-                        <div class="step-description">Define savings objectives</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">⭐</div>
-                                <span>+100 XP</span>
+                        <div class="step-content">
+                            <h3 class="step-title">Profile Setup</h3>
+                            <p class="step-description">Personalize experience</p>
+                            <div class="rewards">
+                                <div class="reward">
+                                    <span class="reward-icon">🎯</span>
+                                    <span>Profile Complete</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="journey-step">
+
+                    <div class="step">
                         <div class="step-number">4</div>
-                        <div class="step-title">Circle Discovery</div>
-                        <div class="step-description">Explore available circles</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">🔍</div>
-                                <span>Explorer Badge</span>
+                        <div class="step-content">
+                            <h3 class="step-title">First Circle</h3>
+                            <p class="step-description">Create or join circle</p>
+                            <div class="rewards">
+                                <div class="reward">
+                                    <span class="reward-icon">💫</span>
+                                    <span>Circle Pioneer</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="emotion-track">
-                    <div class="emotion-point">
-                        <div class="emotion-icon">😊</div>
-                        <div class="emotion-label">Excited</div>
-                    </div>
-                    <div class="emotion-point">
+                    <div class="emotion">
                         <div class="emotion-icon">🤔</div>
                         <div class="emotion-label">Curious</div>
                     </div>
-                    <div class="emotion-point">
-                        <div class="emotion-icon">😃</div>
+                    <div class="emotion">
+                        <div class="emotion-icon">😊</div>
                         <div class="emotion-label">Engaged</div>
                     </div>
-                    <div class="emotion-point">
+                    <div class="emotion">
                         <div class="emotion-icon">🎉</div>
-                        <div class="emotion-label">Accomplished</div>
+                        <div class="emotion-label">Excited</div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Active Usage Phase -->
-            <div class="journey-phase">
-                <h2 class="phase-title">
-                    <div class="phase-icon">2</div>
-                    Active Usage Journey
-                </h2>
-                <div class="journey-grid">
-                    <div class="journey-step">
-                        <div class="step-number">1</div>
-                        <div class="step-title">Regular Saving</div>
-                        <div class="step-description">Consistent contributions</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">💰</div>
-                                <span>Saver Badge</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="journey-step">
-                        <div class="step-number">2</div>
-                        <div class="step-title">Circle Chat</div>
-                        <div class="step-description">Group communication</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">💬</div>
-                                <span>+75 XP</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="journey-step">
-                        <div class="step-number">3</div>
-                        <div class="step-title">Track Progress</div>
-                        <div class="step-description">Monitor achievements</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">📈</div>
-                                <span>Milestone Badge</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="journey-step">
-                        <div class="step-number">4</div>
-                        <div class="step-title">Rewards</div>
-                        <div class="step-description">Redeem points</div>
-                        <div class="gamification-elements">
-                            <div class="gamification-item">
-                                <div class="gamification-icon">🎁</div>
-                                <span>+200 XP</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="emotion-track">
-                    <div class="emotion-point">
+                    <div class="emotion">
                         <div class="emotion-icon">💪</div>
-                        <div class="emotion-label">Motivated</div>
-                    </div>
-                    <div class="emotion-point">
-                        <div class="emotion-icon">👥</div>
-                        <div class="emotion-label">Connected</div>
-                    </div>
-                    <div class="emotion-point">
-                        <div class="emotion-icon">📊</div>
-                        <div class="emotion-label">Informed</div>
-                    </div>
-                    <div class="emotion-point">
-                        <div class="emotion-icon">🌟</div>
-                        <div class="emotion-label">Rewarded</div>
+                        <div class="emotion-label">Empowered</div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="notes">
-            <h3>Journey Insights</h3>
-            <ul style="list-style: none; margin-left: 1rem;">
-                <li>• User engagement increases with gamification elements</li>
-                <li>• Social aspects drive continued participation</li>
-                <li>• Progress tracking maintains motivation</li>
-                <li>• Rewards system encourages regular activity</li>
-            </ul>
+            </section>
         </div>
     </div>
-
-    <script>
-        // Add hover effects and interactivity
-        document.querySelectorAll('.journey-step').forEach(step => {
-            step.addEventListener('mouseover', () => {
-                step.style.transform = 'scale(1.05)';
-                step.style.transition = 'transform 0.2s ease';
-            });
-
-            step.addEventListener('mouseout', () => {
-                step.style.transform = 'scale(1)';
-            });
-        });
-    </script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,24 +7,27 @@
     <title>Absa Money Circles - Information Architecture Map (Iteration 1)</title>
     <style>
         :root {
-            --page-margin: 3%;
+            --primary: #DC0037;
+            --background: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         body {
             background: #f5f5f5;
-            padding: var(--page-margin);
             min-height: 100vh;
-            max-width: 1920px;
-            margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: center;
+            padding: 2rem;
         }
 
         .container {
@@ -32,174 +36,184 @@
             height: calc(100vh - 6%);
             max-height: 1080px;
             margin: 3%;
-            background: white;
-            padding: calc(var(--page-margin) * 0.75);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px var(--shadow);
             overflow-y: auto;
             position: relative;
         }
 
         h1 {
-            color: #DC0037;
+            color: var(--primary);
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            font-size: 2rem;
         }
 
-        .map-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .sitemap {
-            position: relative;
-        }
-
-        .node {
-            padding: 1rem;
-            border: 2px solid #DC0037;
-            border-radius: 8px;
-            margin: 1rem;
-            text-align: center;
-            background: white;
-            min-width: 150px;
-            position: relative;
-        }
-
-        .node.main {
-            background: #DC0037;
-            color: white;
-        }
-
-        .level {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .level::before {
-            content: '';
-            position: absolute;
-            top: -1rem;
-            left: 50%;
-            width: 2px;
-            height: 1rem;
-            background: #DC0037;
-        }
-
-        .level:first-child::before {
-            display: none;
-        }
-
-        .branch {
+        .ia-map {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin: 0 1rem;
+            gap: 4rem;
         }
 
-        .branch::before {
-            content: '';
-            position: absolute;
-            top: -1rem;
-            width: 2px;
-            height: 1rem;
-            background: #DC0037;
+        .section {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
         }
 
-        .legend {
-            margin-top: 3rem;
-            padding: 1rem;
-            background: #f8f8f8;
-            border-radius: 8px;
+        .section:hover {
+            box-shadow: 0 4px 20px var(--shadow);
+            transform: translateY(-2px);
         }
 
-        .legend h3 {
-            margin-bottom: 1rem;
-            color: #DC0037;
-        }
-
-        .legend-item {
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
-            margin: 0.5rem 0;
+            gap: 1rem;
         }
 
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            margin-right: 1rem;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature {
+            background: var(--background);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .feature:hover {
+            transform: scale(1.02);
+        }
+
+        .feature-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: #f8f8f8;
+            border-radius: 12px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .metric-label {
+            color: var(--text);
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics {
+                flex-direction: column;
+                gap: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Absa Money Circles - Information Architecture Map</h1>
+        <h1>Absa Money Circles - Information Architecture</h1>
         
-        <div class="map-container">
-            <div class="sitemap">
-                <!-- Main App -->
-                <div class="level">
-                    <div class="node main">Absa Money Circles App</div>
-                </div>
-
-                <!-- Core Features -->
-                <div class="level">
-                    <div class="branch">
-                        <div class="node">Home Dashboard</div>
-                        <div class="level">
-                            <div class="node">Account Balance</div>
-                            <div class="node">Quick Actions</div>
-                            <div class="node">Mission Tracker</div>
-                        </div>
+        <div class="ia-map">
+            <section class="section">
+                <h2 class="section-title">Core Features</h2>
+                <div class="feature-grid">
+                    <div class="feature">
+                        <h3 class="feature-title">Money Circles</h3>
+                        <p class="feature-description">Create and manage savings circles with friends and family</p>
                     </div>
-                    <div class="branch">
-                        <div class="node">Money Circles</div>
-                        <div class="level">
-                            <div class="node">Create Circle</div>
-                            <div class="node">Join Circle</div>
-                            <div class="node">Circle Management</div>
-                        </div>
+                    <div class="feature">
+                        <h3 class="feature-title">Abby Assistant</h3>
+                        <p class="feature-description">AI-powered financial guidance and support</p>
                     </div>
-                    <div class="branch">
-                        <div class="node">Abby Assistant</div>
-                        <div class="level">
-                            <div class="node">Chat Interface</div>
-                            <div class="node">Financial Tips</div>
-                            <div class="node">Support</div>
-                        </div>
+                    <div class="feature">
+                        <h3 class="feature-title">Goal Tracking</h3>
+                        <p class="feature-description">Monitor savings progress and achievements</p>
+                    </div>
+                    <div class="feature">
+                        <h3 class="feature-title">Social Features</h3>
+                        <p class="feature-description">Connect and interact with circle members</p>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <div class="legend">
-            <h3>Legend</h3>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #DC0037;"></div>
-                <span>Main Application</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="border: 2px solid #DC0037;"></div>
-                <span>Core Features & Functionality</span>
+            <section class="section">
+                <h2 class="section-title">User Journey</h2>
+                <div class="feature-grid">
+                    <div class="feature">
+                        <h3 class="feature-title">Onboarding</h3>
+                        <p class="feature-description">Simple registration and profile setup</p>
+                    </div>
+                    <div class="feature">
+                        <h3 class="feature-title">Circle Creation</h3>
+                        <p class="feature-description">Set goals and invite members</p>
+                    </div>
+                    <div class="feature">
+                        <h3 class="feature-title">Regular Savings</h3>
+                        <p class="feature-description">Contribute and track progress</p>
+                    </div>
+                    <div class="feature">
+                        <h3 class="feature-title">Rewards</h3>
+                        <p class="feature-description">Earn badges and achievements</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-value">4.8/5</div>
+                    <div class="metric-label">User Satisfaction</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">98%</div>
+                    <div class="metric-label">Success Rate</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2M+</div>
+                    <div class="metric-label">Active Users</div>
+                </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Add hover effects and interactivity
-        document.querySelectorAll('.node').forEach(node => {
-            node.addEventListener('mouseover', () => {
-                node.style.transform = 'scale(1.05)';
-                node.style.transition = 'transform 0.2s ease';
-            });
-
-            node.addEventListener('mouseout', () => {
-                node.style.transform = 'scale(1)';
-            });
-        });
-    </script>
 </body>
 </html>
