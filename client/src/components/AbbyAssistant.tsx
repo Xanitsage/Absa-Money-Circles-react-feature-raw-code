@@ -82,12 +82,39 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  // Speech synthesis setup
+  const synth = window.speechSynthesis;
+  const recognition = new (window as any).webkitSpeechRecognition();
+
+  const speakText = (text: string, voiceConfig?: any) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.pitch = voiceConfig?.pitch || 1;
+    utterance.rate = voiceConfig?.rate || 1;
+    utterance.voice = synth.getVoices().find(voice => voice.name === (voiceConfig?.voice || 'Google UK English Female'));
+    synth.speak(utterance);
+  };
+
+  const startVoiceRecognition = () => {
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.start();
+  };
+
+  recognition.onresult = (event: any) => {
+    const transcript = event.results[0][0].transcript;
+    setInput(transcript);
+    handleSend(transcript);
+  };
+
+  const handleSend = (voiceInput?: string) => {
+    const messageText = voiceInput || input;
+    if (!messageText.trim()) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: input,
+      text: messageText,
       sender: "user",
       timestamp: new Date()
     };
@@ -95,20 +122,25 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
     setMessages(prev => [...prev, userMessage]);
     setInput("");
 
-    // Process the message and generate a response
-    setTimeout(() => {
-      const response = generateResponse(input);
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: response,
-        sender: "assistant",
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, assistantMessage]);
-
-      // Update suggestions based on context
-      updateSuggestions(input);
-    }, 500); // Simulate AI processing time
+    // Handle incoming response
+    fetch('/api/abby/message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: messageText })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.response) {
+        // Speak the response
+        speakText(data.response.text, data.response.voiceConfig);
+        setMessages(prev => [...prev, {
+          id: Date.now().toString(),
+          text: data.response.text,
+          sender: "assistant",
+          timestamp: new Date()
+        }]);
+      }
+    });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -120,7 +152,7 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
   // Mock response generation
   const generateResponse = (userInput: string): string => {
     const lowerInput = userInput.toLowerCase();
-    
+
     // Check for balance or account inquiries
     if (lowerInput.includes("balance") || lowerInput.includes("money") || lowerInput.includes("account")) {
       if (wallet) {
@@ -149,7 +181,7 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
   // Update suggestion chips based on conversation context
   const updateSuggestions = (lastInput: string) => {
     const input = lastInput.toLowerCase();
-    
+
     if (input.includes("savings") || input.includes("goal")) {
       setSuggestions([
         "Create a new goal",
@@ -316,12 +348,23 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
           <Button 
             size="icon" 
             className="rounded-full"
-            onClick={handleSend}
+            onClick={() => handleSend()}
             disabled={!input.trim()}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="m12 19-7-7 7-7"/>
               <path d="M19 12H5"/>
+            </svg>
+          </Button>
+          <Button 
+            variant="outline"
+            onClick={startVoiceRecognition}
+            className="w-10 h-10 p-0 rounded-full"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" x2="12" y1="19" y2="22"/>
             </svg>
           </Button>
         </div>

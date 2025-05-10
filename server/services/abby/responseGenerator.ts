@@ -115,9 +115,14 @@ interface ResponseMetadata {
 
 interface GeneratedResponse {
   text: string;
-  type: 'text' | 'achievement' | 'tip' | 'reward';
+  type: 'text' | 'achievement' | 'tip' | 'reward' | 'voice';
   metadata: ResponseMetadata;
   suggestions: string[];
+  voiceConfig?: {
+    pitch: number;
+    rate: number;
+    voice: string;
+  };
 }
 
 const responseTemplates = {

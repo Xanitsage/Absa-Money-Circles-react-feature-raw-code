@@ -1,0 +1,30 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="100%" height="100%" fill="white"/>
+  
+  <!-- Profile Header -->
+  <g transform="translate(20,20)">
+    <circle cx="50" cy="50" r="40" fill="#E31837"/>
+    <text x="35" y="65" fill="white" font-family="Arial" font-size="24">LM</text>
+    
+    <text x="120" y="40" font-family="Arial" font-size="24" font-weight="bold">Lindokuhle Msiza</text>
+    <text x="120" y="70" font-family="Arial" font-size="14" fill="#666">lindokuhle.msiza@gmail.com</text>
+    
+    <g transform="translate(120,90)">
+      <text font-family="Arial" font-size="12">Level 2</text>
+      <text x="60" y="0" font-family="Arial" font-size="12">65 XP</text>
+    </g>
+  </g>
+
+  <!-- Badges -->
+  <g transform="translate(20,140)">
+    <text x="0" y="24" font-family="Arial" font-size="16">Your Badges</text>
+    <g transform="translate(0,40)">
+      <circle cx="30" cy="30" r="25" fill="#FFE4E8"/>
+      <circle cx="100" cy="30" r="25" fill="#FFE4E8"/>
+      <circle cx="170" cy="30" r="25" fill="#FFE4E8"/>
+      <circle cx="240" cy="30" r="25" fill="#FFE4E8"/>
+      <circle cx="310" cy="30" r="25" fill="#FFE4E8"/>
+    </g>
+  </g>
+</svg>
