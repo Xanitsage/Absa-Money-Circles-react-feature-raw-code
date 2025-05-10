@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absa Money Circles - User Journey Fishbone Map</title>
+    <title>Absa Money Circles - User Journey Fishbone</title>
     <style>
         :root {
-            --page-margin: 3%;
+            --primary: #DC0037;
+            --background: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         body {
             background: #f5f5f5;
-            padding: var(--page-margin);
             min-height: 100vh;
-            max-width: 1920px;
-            margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: center;
+            padding: 2rem;
         }
 
         .container {
@@ -32,251 +35,72 @@
             height: calc(100vh - 6%);
             max-height: 1080px;
             margin: 3%;
-            background: white;
-            padding: calc(var(--page-margin) * 0.75);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px var(--shadow);
             overflow-y: auto;
-            position: relative;
         }
 
         h1 {
-            color: #DC0037;
+            color: var(--primary);
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            font-size: 2rem;
         }
 
-        .fishbone-diagram {
+        .fishbone {
             position: relative;
-            padding: 4rem;
-            min-height: 500px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
         }
 
-        .main-spine {
-            position: relative;
+        .spine {
             height: 4px;
-            background: #DC0037;
-            margin: 150px 0;
-            width: 90%;
-            left: 5%;
+            background: var(--primary);
+            margin: 3rem 0;
         }
 
         .phase {
-            position: absolute;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .step {
             width: 200px;
             padding: 1rem;
             background: white;
-            border: 2px solid #DC0037;
+            border: 2px solid var(--primary);
             border-radius: 8px;
             text-align: center;
         }
 
-        .phase-title {
-            color: #DC0037;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .cause {
-            position: absolute;
-            width: 150px;
-            padding: 0.75rem;
-            background: white;
-            border: 1px solid #666;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .cause {
-            position: relative;
-        }
-
-        .cause::before {
-            content: '';
-            position: absolute;
+        .connector {
             width: 2px;
-            height: 40px;
-            background: #666;
-            left: 50%;
-            bottom: -40px;
-            transform-origin: top;
-        }
-
-        .cause::after {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 2px;
-            background: #666;
-            left: 50%;
-            bottom: -40px;
-            transform-origin: left;
-        }
-
-        /* Top causes */
-        div[id$="causes-top"] .cause::before {
-            top: -40px;
-            bottom: auto;
-        }
-
-        div[id$="causes-top"] .cause::after {
-            top: -40px;
-            bottom: auto;
-        }
-
-        /* Left side causes */
-        #discovery-causes-top .cause::after,
-        #discovery-causes-bottom .cause::after {
-            transform: rotate(-45deg);
-        }
-
-        /* Center causes */
-        #onboarding-causes-top .cause::after,
-        #onboarding-causes-bottom .cause::after {
-            transform: rotate(-90deg);
-            width: 80px;
-        }
-
-        /* Right side causes */
-        #effect-causes-top .cause::after,
-        #effect-causes-bottom .cause::after {
-            transform: rotate(-135deg);
-        }
-
-        /* Discovery Phase */
-        #discovery {
-            left: 10%;
-            top: -60px;
-        }
-
-        #discovery-causes-top .cause:nth-child(1) {
-            left: 100px;
-            top: -180px;
-        }
-
-        #discovery-causes-top .cause:nth-child(2) {
-            left: 300px;
-            top: -180px;
-        }
-
-        #discovery-causes-bottom .cause:nth-child(1) {
-            left: 100px;
-            top: 120px;
-        }
-
-        #discovery-causes-bottom .cause:nth-child(2) {
-            left: 300px;
-            top: 120px;
-        }
-
-        /* Onboarding Phase */
-        #onboarding {
-            left: 45%;
-            top: -60px;
-        }
-
-        #onboarding-causes-top .cause:nth-child(1) {
-            left: 550px;
-            top: -180px;
-        }
-
-        #onboarding-causes-top .cause:nth-child(2) {
-            left: 750px;
-            top: -180px;
-        }
-
-        #onboarding-causes-bottom .cause:nth-child(1) {
-            left: 550px;
-            top: 120px;
-        }
-
-        #onboarding-causes-bottom .cause:nth-child(2) {
-            left: 750px;
-            top: 120px;
-        }
-
-        /* Effect Phase */
-        #effect {
-            right: 10%;
-            top: -60px;
-        }
-
-        #effect-causes-top .cause:nth-child(1) {
-            right: 100px;
-            top: -180px;
-        }
-
-        #effect-causes-top .cause:nth-child(2) {
-            right: 300px;
-            top: -180px;
-        }
-
-        #effect-causes-bottom .cause:nth-child(1) {
-            right: 100px;
-            top: 120px;
-        }
-
-        #effect-causes-bottom .cause:nth-child(2) {
-            right: 300px;
-            top: 120px;
-        }
-
-        .cause-line {
-            position: absolute;
-            height: 2px;
-            background: #666;
-            transform-origin: left;
+            height: 50px;
+            background: var(--primary);
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Absa Money Circles - User Journey Fishbone Map</h1>
-        
-        <div class="fishbone-diagram">
-            <div class="main-spine"></div>
-
-            <!-- Discovery Phase -->
-            <div id="discovery" class="phase">
-                <div class="phase-title">Discovery</div>
-                <div class="phase-description">Initial User Contact</div>
+        <h1>User Journey Fishbone Diagram</h1>
+        <div class="fishbone">
+            <div class="phase">
+                <div class="step">Discovery</div>
+                <div class="step">Onboarding</div>
+                <div class="step">Engagement</div>
+                <div class="step">Retention</div>
             </div>
-            <div id="discovery-causes-top">
-                <div class="cause">App Store Search<br>& Download</div>
-                <div class="cause">Social Media<br>Marketing</div>
-            </div>
-            <div id="discovery-causes-bottom">
-                <div class="cause">Word of Mouth<br>Referrals</div>
-                <div class="cause">Bank Branch<br>Recommendations</div>
-            </div>
-
-            <!-- Onboarding Phase -->
-            <div id="onboarding" class="phase">
-                <div class="phase-title">Onboarding</div>
-                <div class="phase-description">User Registration</div>
-            </div>
-            <div id="onboarding-causes-top">
-                <div class="cause">Profile Setup<br>& Verification</div>
-                <div class="cause">Abby Assistant<br>Introduction</div>
-            </div>
-            <div id="onboarding-causes-bottom">
-                <div class="cause">Circle Creation<br>Tutorial</div>
-                <div class="cause">Goal Setting<br>Guidance</div>
-            </div>
-
-            <!-- Effect Phase -->
-            <div id="effect" class="phase">
-                <div class="phase-title">Effect</div>
-                <div class="phase-description">User Engagement</div>
-            </div>
-            <div id="effect-causes-top">
-                <div class="cause">Active Circle<br>Participation</div>
-                <div class="cause">Regular Savings<br>Contributions</div>
-            </div>
-            <div id="effect-causes-bottom">
-                <div class="cause">Achievement<br>Unlocks</div>
-                <div class="cause">Financial Goal<br>Progress</div>
+            <div class="spine"></div>
+            <div class="phase">
+                <div class="step">Marketing</div>
+                <div class="step">Registration</div>
+                <div class="step">Circle Creation</div>
+                <div class="step">Growth</div>
             </div>
         </div>
     </div>

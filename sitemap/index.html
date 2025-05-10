@@ -1,67 +1,90 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Absa Money Circles - Sitemap</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absa Money Circles - Sitemap</title>
+    <style>
+        :root {
+            --primary: #DC0037;
+            --background: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            width: calc(100% - 6%);
+            max-width: 1920px;
+            height: calc(100vh - 6%);
+            max-height: 1080px;
+            margin: 3%;
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px var(--shadow);
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .sitemap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .node {
+            padding: 1rem;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .children {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="container" style="width: calc(100% - 6%); max-width: 1920px; height: calc(100vh - 6%); max-height: 1080px; margin: 3%; background: white; padding: 2.25%; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow-y: auto; position: relative;">
-    <h1>Absa Money Circles App Sitemap</h1>
-
-    <div class="sitemap">
-      <div class="node root">
-        <div class="content">
-          <img src="../client/src/assets/absa_logo.png" alt="Absa Logo" class="logo">
-          <span>Absa App Home</span>
-        </div>
-        <div class="children">
-          <div class="node">
-            <div class="content" data-route="/">Home Dashboard</div>
+    <div class="container">
+        <h1>Absa Money Circles - Sitemap</h1>
+        <div class="sitemap">
+            <div class="node">Home</div>
             <div class="children">
-              <div class="node" data-route="/circles">
-                <div class="content">Money Circles</div>
-                <div class="children">
-                  <div class="node" data-route="/create">
-                    <div class="content">Create Circle</div>
-                  </div>
-                  <div class="node" data-route="/circle/:id">
-                    <div class="content">Circle Details</div>
-                    <div class="features">
-                      <span>Overview</span>
-                      <span>Members</span>
-                      <span>Chat</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="node" data-route="/pay">
-                <div class="content">Payments</div>
-                <div class="features">
-                  <span>Scan QR</span>
-                  <span>Pay Phone</span>
-                  <span>Request</span>
-                  <span>Merchant</span>
-                </div>
-              </div>
-              <div class="node" data-route="/profile">
-                <div class="content">Profile</div>
-                <div class="features">
-                  <span>Settings</span>
-                  <span>Cards</span>
-                  <span>Badges</span>
-                </div>
-              </div>
-              <div class="node" data-route="/notifications">
-                <div class="content">Notifications</div>
-              </div>
+                <div class="node">Money Circles</div>
+                <div class="node">Savings Goals</div>
+                <div class="node">Abby Assistant</div>
+                <div class="node">Profile</div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script src="script.js"></script>
 </body>
 </html>
