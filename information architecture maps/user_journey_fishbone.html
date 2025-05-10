@@ -27,13 +27,17 @@
         }
 
         .container {
-            width: 100%;
+            width: calc(100% - 6%);
+            max-width: 1920px;
+            height: calc(100vh - 6%);
+            max-height: 1080px;
+            margin: 3%;
             background: white;
             padding: calc(var(--page-margin) * 0.75);
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-height: 1080px;
             overflow-y: auto;
+            position: relative;
         }
 
         h1 {
