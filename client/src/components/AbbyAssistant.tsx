@@ -84,48 +84,108 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
 
   // Speech synthesis setup
   const synth = window.speechSynthesis;
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [isListening, setIsListening] = useState(false);
   const recognition = new (window as any).webkitSpeechRecognition();
+
+  // Load and update available voices
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = synth.getVoices();
+      setVoices(availableVoices);
+    };
+
+    loadVoices();
+    if (synth.onvoiceschanged !== undefined) {
+      synth.onvoiceschanged = loadVoices;
+    }
+  }, []);
 
   // Configure speech synthesis for a natural female voice
   const configureSpeech = () => {
-    const voices = synth.getVoices();
-    const femaleVoice = voices.find(voice => 
-      voice.name.includes('Female') || 
-      voice.name.includes('Samantha') || 
-      voice.name.includes('Google UK English Female')
+    const preferredVoices = [
+      'Google UK English Female',
+      'Microsoft Sonia Online (Natural)',
+      'Samantha',
+      'Victoria'
+    ];
+
+    const femaleVoice = voices.find(voice =>
+      preferredVoices.some(preferred => voice.name.includes(preferred)) ||
+      voice.name.includes('Female')
     );
+
     return {
       voice: femaleVoice || voices[0],
-      pitch: 1.1, // Slightly higher pitch for female voice
-      rate: 1.0,  // Natural speaking rate
+      pitch: 1.0,  // Natural pitch
+      rate: 0.9,   // Slightly slower for clarity
       volume: 1.0
     };
   };
 
   const speakMessage = (text: string) => {
+    // Cancel any ongoing speech
+    synth.cancel();
+
     const utterance = new SpeechSynthesisUtterance(text);
     const voiceConfig = configureSpeech();
     
-    utterance.voice = voiceConfig.voice;
-    utterance.pitch = voiceConfig.pitch;
-    utterance.rate = voiceConfig.rate;
-    utterance.volume = voiceConfig.volume;
+    Object.assign(utterance, voiceConfig);
     
-    synth.speak(utterance);
-  };
+    // Add natural pauses at punctuation
+    utterance.text = text.replace(/([.!?])/g, '$1 ');
+    
+    utterance.onstart = () => {
+      // Visual feedback that Abby is speaking
+      toast({
+        title: "Abby is speaking",
+        duration: 2000
+      });
+    };
 
-  const speakText = (text: string, voiceConfig?: any) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.pitch = voiceConfig?.pitch || 1;
-    utterance.rate = voiceConfig?.rate || 1;
-    utterance.voice = synth.getVoices().find(voice => voice.name === (voiceConfig?.voice || 'Google UK English Female'));
+    utterance.onerror = (event) => {
+      console.error('Speech synthesis error:', event);
+      toast({
+        title: "Speech synthesis error",
+        description: "Please try again",
+        variant: "destructive"
+      });
+    };
+
     synth.speak(utterance);
   };
 
   const startVoiceRecognition = () => {
+    if (isListening) {
+      recognition.stop();
+      return;
+    }
+
     recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.interimResults = true;
     recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setIsListening(true);
+      toast({
+        title: "Listening...",
+        duration: 2000
+      });
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error('Speech recognition error:', event);
+      setIsListening(false);
+      toast({
+        title: "Speech recognition error",
+        description: "Please try again",
+        variant: "destructive"
+      });
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
 
     recognition.start();
   };
@@ -133,7 +193,10 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
   recognition.onresult = (event: any) => {
     const transcript = event.results[0][0].transcript;
     setInput(transcript);
-    handleSend(transcript);
+    
+    if (event.results[0].isFinal) {
+      handleSend(transcript);
+    }
   };
 
   const handleSend = (voiceInput?: string) => {
@@ -385,15 +448,22 @@ export default function AbbyAssistant({ onClose }: { onClose: () => void }) {
             </svg>
           </Button>
           <Button 
-            variant="outline"
+            variant={isListening ? "default" : "outline"}
             onClick={startVoiceRecognition}
-            className="w-10 h-10 p-0 rounded-full"
+            className={`w-10 h-10 p-0 rounded-full transition-colors duration-200 ${isListening ? 'bg-red-500 hover:bg-red-600' : ''}`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-              <line x1="12" x2="12" y1="19" y2="22"/>
-            </svg>
+            {isListening ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <rect x="9" y="9" width="6" height="6"/>
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" x2="12" y1="19" y2="22"/>
+              </svg>
+            )}
           </Button>
         </div>
       </div>
