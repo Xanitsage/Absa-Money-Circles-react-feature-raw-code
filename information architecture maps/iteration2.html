@@ -1,266 +1,74 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absa Money Circles - User Flow Architecture (Iteration 2)</title>
-    <style>
-        :root {
-            --primary: #DC0037;
-            --background: #ffffff;
-            --text: #333333;
-            --border: #e0e0e0;
-            --shadow: rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        body {
-            background: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .container {
-            width: calc(100% - 6%);
-            max-width: 1920px;
-            height: calc(100vh - 6%);
-            max-height: 1080px;
-            margin: 3%;
-            background: var(--background);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px var(--shadow);
-            overflow-y: auto;
-        }
-
-        h1 {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2rem;
-        }
-
-        .flow-container {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-        }
-
-        .flow-section {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .flow-section:hover {
-            box-shadow: 0 4px 20px var(--shadow);
-        }
-
-        .flow-title {
-            color: var(--primary);
-            margin-bottom: 2rem;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .flow-diagram {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            padding: 2rem 0;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .step {
-            background: var(--background);
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            padding: 1.5rem;
-            min-width: 200px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            transition: all 0.2s ease;
-        }
-
-        .step:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .step.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .step-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .step-description {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .arrow {
-            flex: 1;
-            height: 2px;
-            background: var(--primary);
-            margin: 0 1rem;
-            position: relative;
-            min-width: 50px;
-        }
-
-        .arrow::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            border-left: 8px solid var(--primary);
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-        }
-
-        .notes {
-            margin-top: 3rem;
-            padding: 1.5rem;
-            background: #fff5f5;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .notes h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .notes ul {
-            list-style: none;
-            margin-left: 1rem;
-        }
-
-        .notes li {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .notes li::before {
-            content: '•';
-            color: var(--primary);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-
-            .flow-diagram {
-                flex-direction: column;
-            }
-
-            .arrow {
-                width: 2px;
-                height: 30px;
-                margin: 1rem 0;
-            }
-
-            .arrow::after {
-                right: 50%;
-                top: 100%;
-                transform: translateX(50%);
-                border-left: 8px solid transparent;
-                border-right: 8px solid transparent;
-                border-top: 8px solid var(--primary);
-                border-bottom: none;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Absa Money Circles - User Flow Architecture</h1>
-        
-        <div class="flow-container">
-            <div class="flow-section">
-                <h2 class="flow-title">Circle Creation Flow</h2>
-                <div class="flow-diagram">
-                    <div class="step active">
-                        <div class="step-title">Start Circle</div>
-                        <div class="step-description">Initialize new circle</div>
-                    </div>
-                    <div class="arrow"></div>
-                    <div class="step">
-                        <div class="step-title">Set Details</div>
-                        <div class="step-description">Configure circle parameters</div>
-                    </div>
-                    <div class="arrow"></div>
-                    <div class="step">
-                        <div class="step-title">Invite Members</div>
-                        <div class="step-description">Share circle access</div>
-                    </div>
-                    <div class="arrow"></div>
-                    <div class="step">
-                        <div class="step-title">Activate</div>
-                        <div class="step-description">Begin saving journey</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flow-section">
-                <h2 class="flow-title">Savings Management Flow</h2>
-                <div class="flow-diagram">
-                    <div class="step active">
-                        <div class="step-title">View Circle</div>
-                        <div class="step-description">Access dashboard</div>
-                    </div>
-                    <div class="arrow"></div>
-                    <div class="step">
-                        <div class="step-title">Contribute</div>
-                        <div class="step-description">Make payments</div>
-                    </div>
-                    <div class="arrow"></div>
-                    <div class="step">
-                        <div class="step-title">Track Progress</div>
-                        <div class="step-description">Monitor goals</div>
-                    </div>
-                    <div class="arrow"></div>
-                    <div class="step">
-                        <div class="step-title">Earn Rewards</div>
-                        <div class="step-description">Unlock achievements</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="notes">
-                <h3>Key Design Principles</h3>
-                <ul>
-                    <li>Simple and intuitive user flows</li>
-                    <li>Clear progress indicators</li>
-                    <li>Engaging reward system</li>
-                    <li>Social interaction features</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</body>
+ 
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Absa Money Circles - User Flow Architecture (Iteration 2)</title>         
+        <style>:root { --primary: #DC0037; --background: #ffffff; --text: #ffffff; --border: #e0e0e0; --shadow: rgba(0, 0, 0, 0.); } * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; } body { background: #f5f5f5; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; } .container { width: calc(100% - 6%); max-width: 1920px; height: calc(100vh - 6%); max-height: 1080px; margin: 3%; background: var(--background); padding: 2rem; border-radius: 16px; box-shadow: 0 8px 30px var(--shadow); overflow-y: auto; } h1 { color: var(--primary); text-align: center; margin-bottom: 3rem; font-size: 2rem; } .flow-container { display: flex; flex-direction: column; gap: 3rem; } .flow-section { border: 1px solid var(--border); border-radius: 12px; padding: 2rem; transition: all 0.3s ease; } .flow-section:hover { box-shadow: 0 4px 20px var(--shadow); } .flow-title { color: var(--primary); margin-bottom: 2rem; font-size: 1.5rem; display: flex; align-items: center; gap: 1rem; } .flow-diagram { display: flex; align-items: center; justify-content: space-between; position: relative; padding: 2rem 0; flex-wrap: wrap; gap: 1rem; } .step { background: var(--background); border: 2px solid var(--primary); border-radius: 8px; padding: 1.5rem; min-width: 200px; text-align: center; position: relative; z-index: 1; transition: all 0.2s ease; } .step:hover { transform: scale(1.05); box-shadow: 0 4px 15px var(--shadow); } .step.active { background: var(--primary); color: white; } .step-title { font-weight: 600; margin-bottom: 0.5rem; } .step-description { font-size: 0.9rem; color: #666; background-color: #ffffff; } .arrow { flex: 1; height: 2px; background: var(--primary); margin: 0 1rem; position: relative; min-width: 50px; } .arrow::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); border-left: 8px solid var(--primary); border-top: 8px solid transparent; border-bottom: 8px solid transparent; } .notes { margin-top: 3rem; padding: 1.5rem; background: #fff5f5; border-radius: 12px; border-left: 4px solid var(--primary); } .notes h3 { color: var(--primary); margin-bottom: 1rem; } .notes ul { list-style: none; margin-left: 1rem; } .notes li { margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; } .notes li::before { content: '•'; color: var(--primary); } @media (max-width: 768px) { .container {  margin: 1rem;  padding: 1rem; }  .flow-diagram {  flex-direction: column; }  .arrow {  width: 2px;  height: 30px;  margin: 1rem 0; }  .arrow::after {  right: 50%;  top: 100%;  transform: translateX(50%);  border-left: 8px solid transparent;  border-right: 8px solid transparent;  border-top: 8px solid var(--primary);  border-bottom: none; } }</style>         
+    </head>     
+    <body> 
+        <div class="container"> 
+            <h1>Absa Money Circles - User Flow Architecture</h1> 
+            <div class="flow-container"> 
+                <div class="flow-section"> 
+                    <h2 class="flow-title">Circle Creation Flow</h2> 
+                    <div class="flow-diagram"> 
+                        <div class="step active"> 
+                            <div class="step-title">Start Circle</div>                             
+                            <div class="step-description">Initialize new circle</div>                             
+                        </div>                         
+                        <div class="arrow"></div>                         
+                        <div class="step"> 
+                            <div class="step-title">Set Details</div>                             
+                            <div class="step-description">Configure circle parameters</div>                             
+                        </div>                         
+                        <div class="arrow"></div>                         
+                        <div class="step"> 
+                            <div class="step-title">Invite Members</div>                             
+                            <div class="step-description">Share circle access</div>                             
+                        </div>                         
+                        <div class="arrow"></div>                         
+                        <div class="step"> 
+                            <div class="step-title">Activate</div>                             
+                            <div class="step-description">Begin saving journey</div>                             
+                        </div>                         
+                    </div>                     
+                </div>                 
+                <div class="flow-section"> 
+                    <h2 class="flow-title">Savings Management Flow</h2> 
+                    <div class="flow-diagram"> 
+                        <div class="step active"> 
+                            <div class="step-title">View Circle</div>                             
+                            <div class="step-description">Access dashboard</div>                             
+                        </div>                         
+                        <div class="arrow"></div>                         
+                        <div class="step"> 
+                            <div class="step-title">Contribute</div>                             
+                            <div class="step-description">Make payments</div>                             
+                        </div>                         
+                        <div class="arrow"></div>                         
+                        <div class="step"> 
+                            <div class="step-title">Track Progress</div>                             
+                            <div class="step-description">Monitor goals</div>                             
+                        </div>                         
+                        <div class="arrow"></div>                         
+                        <div class="step"> 
+                            <div class="step-title">Earn Rewards</div>                             
+                            <div class="step-description">Unlock achievements</div>                             
+                        </div>                         
+                    </div>                     
+                </div>                 
+                <div class="notes"> 
+                    <h3>Key Design Principles</h3> 
+                    <ul> 
+                        <li>Simple and intuitive user flows</li>                         
+                        <li>Clear progress indicators</li>                         
+                        <li>Engaging reward system</li>                         
+                        <li>Social interaction features</li>                         
+                    </ul>                     
+                </div>                 
+            </div>             
+        </div>         
+    </body>     
 </html>
